@@ -1,0 +1,4 @@
+create venv
+    python -m venv venv
+Startproject
+create apps - core,...
