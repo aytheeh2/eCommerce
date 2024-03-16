@@ -15,19 +15,19 @@
                     <a class="nav-link" href="#">Link</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{% url 'core:products-list' %}" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        All Categories
+                    <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Categories
                     </a>
                     <ul class="dropdown-menu">
                         {% for i in categories_context %}
                         <li><a href="{% url 'core:category-details' i.cid %}" class="dropdown-item"
                                 href="#">{{i.title}}</a></li>
                         {%endfor%}
-                        <!-- <li>
+                        <li>
                             <hr class="dropdown-divider">
-                        </li> -->
-                        <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'core:all-categories' %}">All Categories</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">

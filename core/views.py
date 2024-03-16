@@ -14,24 +14,25 @@ def home_view(request):
     return render(request, 'core/index.html', context=context)
 
 
+def all_categories(request):
+    categories = Category.objects.all()
+    context = {
+        'categories': categories,
+    }
+    return render(request, 'core/all_categories.html', context)
+
+
 def products_list_view(request):
-    # Products = Product.objects.filter(featured=True, product_status='published')
-    Products = Product.objects.all()
-    Categories = Category.objects.all()
+    Products = Product.objects.filter(
+        featured=True, product_status='published')
     Vendors = Vendor.objects.all()
     context = {
         'Products': Products,
-        'Categories': Categories,
-        'Vendors': Vendors,
     }
     return render(request, 'core/products-list.html', context=context)
 
 
 def products_detail_view(request, pid):
-    # Products = Product.objects.filter(featured=True, product_status='published')
-    Products = Product.objects.all()
-    Categories = Category.objects.all()
-    Vendors = Vendor.objects.all()
 
     product = get_object_or_404(Product, pid=pid)
     related_products = Product.objects.filter(
@@ -39,9 +40,6 @@ def products_detail_view(request, pid):
     ).exclude(pid=product.pid)
 
     context = {
-        'Products': Products,
-        'Categories': Categories,
-        'Vendors': Vendors,
         'product': product,
         'related_products': related_products,
     }
@@ -51,7 +49,8 @@ def products_detail_view(request, pid):
 
 def products_in_category_view(request, cid):
     category = get_object_or_404(Category, cid=cid)
-    products_in_category = Product.objects.filter(category=category)
+    products_in_category = Product.objects.filter(
+        category=category, product_status='published')
     context = {
         'products_in_category': products_in_category,
         'category': category,

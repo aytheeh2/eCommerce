@@ -8,9 +8,12 @@
 </div>
 <!-- end category ribbon -->
 
-<div class="container">
-    <p class="display-5 text-center mb-4">{{category.title}}</p>
+<div class="container mb-4">
+    <p class="display-5 text-center my-0 py-0">{{category.title}}</p>
+    <p class=" text-center text-success my-0 py-2 text-dark"><small>{{products_in_category.count}}
+            Product{{products_in_category.count|pluralize}}</small></p>
 </div>
+
 
 <!-- search bar -->
 <div class="container m-2 mx-auto">
