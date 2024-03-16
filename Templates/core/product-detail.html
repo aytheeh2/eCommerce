@@ -1,0 +1,143 @@
+{%extends 'core/base.html' %}
+{%block title%}{%endblock title%}
+{%block content%}
+<div class="container my-4 bg-body-tertiary rounded-3">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-lg-9 col-md-12 ">
+            <!-- Adjusted the column size for larger screens and made it full width for smaller screens -->
+            <div class="row">
+                <div class="col-lg-6 col-md-7 position-relative text-center">
+                    <div class="position-absolute top-0 start-0 translate-middle badge bg-danger"
+                        style="z-index: 1; margin-top: 25px; margin-left: 60px;">
+                        -{{ product.get_percentage|floatformat:0 }}% Off
+                    </div>
+                    <img src="{{ product.image.url }}" class="img-fluid img-hover" alt="">
+                </div>
+                <div class="col-lg-6 col-md-5 bg-body-tertiary d-flex justify-content-center align-items-center">
+                    <div class="text-center">
+                        <p class="display-5">{{ product.title }}</p>
+                        <p><small class="fs-6">-{{ product.get_percentage|floatformat:0 }}% OFF</small></p>
+                        <p class="lead mb-1 fw-normal">${{ product.price }}</p>
+                        <p><small class="fs-6">{{ product.description }}</small></p>
+                        <p><small class="">Sold by: {{ product.vendor }}</small></p>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-dark m-1">Buy Now</button>
+                            <button class="btn btn-sm btn-dark m-1">Add To Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 bg-body-secondary rounded-3 border">
+            <div class="row justify-content-center align-items-center m-2 p-2">
+                <div class="col-md-4 col-sm-12 col-lg-12 col-xl-12">
+                    {% if address.status %}
+                    <p class="lead fw-normal text-success">Verified Address<i class="bi bi-check-circle-fill"></i>: </p>
+                    <p>{{address.address}}</p>
+                    {%else%}
+                    <p class="lead fw-normal text-danger">Unverified Address<i class="bi bi-x-circle-fill"></i>: </p>
+                    <p>{{address.address}}</p>
+                    {%endif%}
+                </div>
+                <div class="col-md-4 col-sm-12 col-lg-12 col-xl-12">
+                    <h6>Returns</h6>
+                    <p class="m-1"><small>Returns:{{product.vendor.days_return}} Days</small></p>
+                    <p class="m-1"><small>Shipping Days:{{product.vendor.shipping_on_time}} Days</small></p>
+                    <p class="m-1"><small>Warrenty Period:{{product.vendor.warrenty_period}} Days</small></p>
+                </div>
+                <div class="col-md-4 col-sm-12 col-lg-12 col-xl-12">
+                    <h6>Vendor</h6>
+                    <p>
+                        <img src="{{product.vendor.image.url}}" class="img-fluid " alt="">
+                    </p>
+                    <p class="m-1"><small>Authentic Rating:{{product.vendor.authentic_rating}}%</small></p>
+                    <p class="m-1"><small>Authentic Rating:{{product.vendor.authentic_rating}}%</small></p>
+                    <p class="m-1"><small>Contact:{{product.vendor.contact}}%</small></p>
+                    <!-- <p>Address:{{product.vendor.address}}%</p>  -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <p class="display-5 text-center my-5">Related Products</p>
+</div>
+<div class="container bg-body-secondary align-items-center  my-4 ">
+    <div class="row bg-body-tertiary">
+        <div class="col-12">
+            <div class="owl-carousel owl-theme p-2 m-2 mx-auto">
+                {% for i in related_products %}
+                <div class="item bg-secondary align-items-center">
+                    <div class=" card shadow-sm border-1 rounded-3" style="max-width: 250px; position: relative;">
+                        <div class="position-absolute top-0 start-0 translate-middle badge bg-danger"
+                            style="z-index: 1; margin-top: 25px; margin-left: 40px;">
+                            -{{i.get_percentage|floatformat:0}}% Off
+                        </div>
+                        <a href="{% url 'core:product-details' i.pid %}" class="text-decoration-none text-dark">
+                            <div class="ratio ratio-4x3">
+                                <img src="{{ i.image.url }}" class="card-img-top img-fluid" width="100%" height="100%"
+                                    role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            </div>
+                        </a>
+                        <div class="card-body bg-body-secondary">
+                            <a href="{% url 'core:product-details' i.pid %}" class="text-decoration-none text-dark">
+                                <p class="card-title text-center fs-5">{{i.title}}</p>
+                            </a>
+                            <p class="card-title text-center fs-6">${{i.price}}</p>
+                            <p class="card-text text-center"><small class="text-body-secondary fs-6">Sold by
+                                    {{i.vendor}}</small></p>
+                            <p class="card-text">{{i.description}}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group bg-body-tertiary">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Buy</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Add To
+                                        Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+    integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function () {
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 15,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 3000, // Set autoplay speed in milliseconds (e.g., 3000ms = 3 seconds)
+            dots: false,
+            responsive: {
+                0: {
+                    items: 1 // Display 1 item on screens smaller than 600px
+                },
+                576: {
+                    items: 2 // Display 2 items on screens between 576px and 767px
+                },
+                768: {
+                    items: 3 // Display 3 items on screens between 768px and 991px
+                },
+                992: {
+                    items: 4 // Display 4 items on screens between 992px and 1199px
+                },
+                1200: {
+                    items: 6 // Display 6 items on screens larger than or equal to 1200px
+                }
+            }
+        });
+    });
+</script>
+{%endblock%}
