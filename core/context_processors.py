@@ -4,7 +4,9 @@ from django.shortcuts import get_object_or_404
 
 def default(request):
     # user = request.user
-    categories = Category.objects.all()
+    categories_context = Category.objects.all()
+    vendors_context=Vendor.objects.all()
+
     # address = get_object_or_404(Address, user=user)
     # if address:
     #     address = address
@@ -12,6 +14,6 @@ def default(request):
     #     address = []
     address = []
     return {
-        'categories': categories,
-        'address': address,
+        'categories_context': categories_context,
+        'vendors_context': vendors_context,
     }
