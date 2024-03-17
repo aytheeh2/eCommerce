@@ -67,7 +67,8 @@
                 <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
                     style="background-image: url('{{c.image.url}}');background-repeat: no-repeat;background-position: center;background-size: cover;">
                     <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                        <h3 class="pt-5 mt-5 mb-4 text-center display-6 lh-1 fw-bold text-dark"><a href="{% url 'core:category-details' c.cid %}"
+                        <h3 class="pt-5 mt-5 mb-4 text-center display-6 lh-1 fw-bold text-dark"><a
+                                href="{% url 'core:category-details' c.cid %}"
                                 class="btn btn-sm rounded-3 btn-dark">{{c.title}}</a></h3>
                         <!-- <ul class=" d-flex list-unstyled mt-auto">
                                 <li class="me-auto">
@@ -157,150 +158,199 @@
     </div>
 
 
+    <h2 class="display-4 text-center my-5">Featured Products</h2>
     <!-- start album -->
-    <h2 class="p-3 my-4 border-bottom display-5 text-center">Most Loved Products</h2>
-    <div class="album py-5 bg-dark">
+    <!-- <div class="album py-5 bg-body-secondary">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for p in Products %}
-                <div class="col">
-                    <div class="card shadow-sm border-1 rounded-3" style="max-width: 250px; position: relative;">
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="card shadow-sm border-1 rounded-pill rounded-3" style="max-width: 250px;">
                         <div class="position-absolute top-0 start-0 translate-middle badge bg-danger"
                             style="z-index: 1; margin-left: 20px;">
-                            -{{p.get_percentage|floatformat:0}}% Off
+                            -{{ p.get_percentage|floatformat:0 }}% Off
                         </div>
                         <a href="{% url 'core:product-details' p.pid %}" class="text-decoration-none text-dark">
                             <div class="ratio ratio-4x3">
                                 <img src="{{ p.image.url }}"
-                                    class="bd-placeholder-img card-img-top img-responsive border-1 border-bottom  rounded-top"
+                                    class="bd-placeholder-img card-img-top img-responsive border-1 border-bottom rounded-top"
                                     width="100%" height="100%" role="img" preserveAspectRatio="xMidYMid slice"
                                     focusable="false">
                             </div>
-                            <div class="card-body bg-body-secondary">
-                                <p class="card-title text-center fs-5">{{p.title}}</p>
                         </a>
-                        <p class="card-title text-center fs-6">${{p.price}}</p>
-                        <p class="card-text text-center"><small class="text-body-secondary fs-6">Sold by
-                                {{p.vendor}}</small></p>
-                        <p class="card-text">{{p.description}}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group bg-body-tertiary">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Buy</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Add To Cart</button>
+                        <div class="card-body bg-body-tertiary">
+                            <a href="{% url 'core:product-details' p.pid %}" class="text-decoration-none text-dark">
+                                <p class="card-title text-center fs-5">{{ p.title }}</p>
+                            </a>
+                            <p class="card-title text-center fs-6">${{ p.price }}</p>
+                            <p class="card-text text-center"><small class="text-body-secondary fs-6">Sold by {{
+                                    p.vendor }}</small></p>
+                            <p class="card-text">{{ p.description }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group bg-body-tertiary">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Buy</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Add To
+                                        Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div> -->
+    <!-- end album -->
+
+    <!--  -->
+
+    <div class="container bg-body-secondary align-items-center  my-4 ">
+        <div class="row bg-body-tertiary">
+            <div class="col-12">
+                <div class="owl-carousel owl-theme p-2 m-2 mx-auto">
+                    {% for i in Products %}
+                    <div class="item bg-secondary align-items-center">
+                        <div class=" card shadow-sm border-1 rounded-3" style="max-width: 250px; position: relative;">
+                            <div class="position-absolute top-0 start-0 translate-middle badge bg-danger"
+                                style="z-index: 1; margin-top: 25px; margin-left: 40px;">
+                                -{{i.get_percentage|floatformat:0}}% Off
+                            </div>
+                            <a href="{% url 'core:product-details' i.pid %}" class="text-decoration-none text-dark">
+                                <div class="ratio ratio-4x3">
+                                    <img src="{{ i.image.url }}" class="card-img-top img-fluid" width="100%"
+                                        height="100%" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                </div>
+                            </a>
+                            <div class="card-body bg-body-secondary">
+                                <a href="{% url 'core:product-details' i.pid %}" class="text-decoration-none text-dark">
+                                    <p class="card-title text-center fs-5">{{i.title}}</p>
+                                </a>
+                                <p class="card-title text-center fs-6">${{i.price}}</p>
+                                <p class="card-text text-center"><small class="text-body-secondary fs-6">Sold by
+                                        {{i.vendor}}</small></p>
+                                <p class="card-text">{{i.description|truncatechars:30}}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group bg-body-tertiary mt-auto">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Buy</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Add To
+                                            Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  -->
+
+
+
+    <!-- category banner 2 -->
+    <div class="container-fluid banner bg-secondary my-5">
+        <div class="container py-5">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6">
+                    <div class="py-4">
+                        <h1 class="display-3 text-white">Fresh Exotic Fruits</h1>
+                        <p class="fw-normal display-3 text-dark mb-4">in Our Store</p>
+                        <p class="mb-4 text-dark">The generated Lorem Ipsum is therefore always free from repetition
+                            injected humour, or non-characteristic words etc.</p>
+                        <a href="#"
+                            class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">BUY</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="position-relative">
+                        <img src="img/baner-1.png" class="img-fluid w-100 rounded" alt="">
+                        <div class="d-flex align-items-center justify-content-center bg-white rounded-circle position-absolute"
+                            style="width: 140px; height: 140px; top: 0; left: 0;">
+                            <h1 style="font-size: 100px;">1</h1>
+                            <div class="d-flex flex-column">
+                                <span class="h2 mb-0">50$</span>
+                                <span class="h4 text-muted mb-0">kg</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {%endfor%}
         </div>
     </div>
-</div>
+    <!-- end category banner 2 -->
 
-<!-- end album -->
-
-
-
-<!-- category banner 2 -->
-<div class="container-fluid banner bg-secondary my-5">
-    <div class="container py-5">
-        <div class="row g-4 align-items-center">
-            <div class="col-lg-6">
-                <div class="py-4">
-                    <h1 class="display-3 text-white">Fresh Exotic Fruits</h1>
-                    <p class="fw-normal display-3 text-dark mb-4">in Our Store</p>
-                    <p class="mb-4 text-dark">The generated Lorem Ipsum is therefore always free from repetition
-                        injected humour, or non-characteristic words etc.</p>
-                    <a href="#" class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5">BUY</a>
+    <!-- featured posts -->
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
+                    <h3 class="mb-0">Featured post</h3>
+                    <div class="mb-1 text-body-secondary">Nov 12</div>
+                    <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to
+                        additional content.</p>
+                    <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                        Continue reading
+                        <svg class="bi">
+                            <use xlink:href="#chevron-right"></use>
+                        </svg>
+                    </a>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="position-relative">
-                    <img src="img/baner-1.png" class="img-fluid w-100 rounded" alt="">
-                    <div class="d-flex align-items-center justify-content-center bg-white rounded-circle position-absolute"
-                        style="width: 140px; height: 140px; top: 0; left: 0;">
-                        <h1 style="font-size: 100px;">1</h1>
-                        <div class="d-flex flex-column">
-                            <span class="h2 mb-0">50$</span>
-                            <span class="h4 text-muted mb-0">kg</span>
-                        </div>
-                    </div>
+                <div class="col-auto d-none d-lg-block">
+                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
+                        role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                        focusable="false">
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                            dy=".3em">Thumbnail</text>
+                    </svg>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- end category banner 2 -->
-
-<!-- featured posts -->
-<div class="row mb-2">
-    <div class="col-md-6">
-        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
-                <h3 class="mb-0">Featured post</h3>
-                <div class="mb-1 text-body-secondary">Nov 12</div>
-                <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to
-                    additional content.</p>
-                <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-                    Continue reading
-                    <svg class="bi">
-                        <use xlink:href="#chevron-right"></use>
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-success-emphasis">Design</strong>
+                    <h3 class="mb-0">Post title</h3>
+                    <div class="mb-1 text-body-secondary">Nov 11</div>
+                    <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to
+                        additional content.</p>
+                    <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                        Continue reading
+                        <svg class="bi">
+                            <use xlink:href="#chevron-right"></use>
+                        </svg>
+                    </a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
+                        role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                        focusable="false">
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                            dy=".3em">Thumbnail</text>
                     </svg>
-                </a>
-            </div>
-            <div class="col-auto d-none d-lg-block">
-                <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img"
-                    aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
-                        dy=".3em">Thumbnail</text>
-                </svg>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-success-emphasis">Design</strong>
-                <h3 class="mb-0">Post title</h3>
-                <div class="mb-1 text-body-secondary">Nov 11</div>
-                <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to
-                    additional content.</p>
-                <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-                    Continue reading
-                    <svg class="bi">
-                        <use xlink:href="#chevron-right"></use>
-                    </svg>
-                </a>
-            </div>
-            <div class="col-auto d-none d-lg-block">
-                <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img"
-                    aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
-                        dy=".3em">Thumbnail</text>
-                </svg>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end feature -->
+    <!-- end feature -->
 
 
 
-<!-- start 2 box Section -->
-<div class="container ">
-    <div class="w-100 my-md-3 ps-md-3">
-        <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-            <div class="my-3 py-3">
-                <h2 class="display-5">Another headline</h2>
-                <p class="lead">And an even wittier subheading.</p>
+    <!-- start 2 box Section -->
+    <div class="container ">
+        <div class="w-100 my-md-3 ps-md-3">
+            <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+                <div class="my-3 py-3">
+                    <h2 class="display-5">Another headline</h2>
+                    <p class="lead">And an even wittier subheading.</p>
+                </div>
+                <div class="bg-body-tertiary shadow-sm mx-auto"
+                    style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
             </div>
-            <div class="bg-body-tertiary shadow-sm mx-auto"
-                style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-        </div>
-        <!-- <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+            <!-- <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
                     <div class="my-3 p-3">
                         <h2 class="display-5">Another headline</h2>
                         <p class="lead">And an even wittier subheading.</p>
@@ -308,9 +358,43 @@
                     <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
                     </div>
                 </div> -->
+        </div>
     </div>
+    <!-- end 2 box Section -->
 </div>
-<!-- end 2 box Section -->
-
-</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+    integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function () {
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 15,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 3000, // Set autoplay speed in milliseconds (e.g., 3000ms = 3 seconds)
+            dots: false,
+            responsive: {
+                0: {
+                    items: 1 // Display 1 item on screens smaller than 600px
+                },
+                576: {
+                    items: 2 // Display 2 items on screens between 576px and 767px
+                },
+                768: {
+                    items: 3 // Display 3 items on screens between 768px and 991px
+                },
+                992: {
+                    items: 4 // Display 4 items on screens between 992px and 1199px
+                },
+                1200: {
+                    items: 6 // Display 6 items on screens larger than or equal to 1200px
+                }
+            }
+        });
+    });
+</script>
 {% endblock content %}

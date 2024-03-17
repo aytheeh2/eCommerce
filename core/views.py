@@ -56,3 +56,33 @@ def products_in_category_view(request, cid):
         'category': category,
     }
     return render(request, 'core/products_in_category.html', context=context)
+
+
+def all_vendors(request):
+    vendors = Vendor.objects.all()
+    context = {
+        'vendors': vendors,
+    }
+    return render(request, 'core/vendor_list.html', context)
+
+
+def vendor_details(request, vid):
+    vendor = get_object_or_404(Vendor, vid=vid)
+    products_of_vendor = Product.objects.filter(
+        vendor=vendor, product_status='published').order_by('?')
+    context = {
+        'vendor': vendor,
+        'products_of_vendor': products_of_vendor,
+    }
+    return render(request, 'core/vendor_details.html', context)
+
+
+def vendor_shop(request, vid):
+    vendor = get_object_or_404(Vendor, vid=vid)
+    products_of_vendor = Product.objects.filter(
+        vendor=vendor, product_status='published').order_by('?')
+    context = {
+        'vendor': vendor,
+        'products_of_vendor': products_of_vendor,
+    }
+    return render(request, 'core/vendor_shop.html', context)

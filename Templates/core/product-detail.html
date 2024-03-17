@@ -48,6 +48,9 @@
                 </div>
                 <div class="col-md-4 col-sm-12 col-lg-12 col-xl-12">
                     <h6>Vendor</h6>
+                    <p class="mb-1"><small><a
+                                href="{% url 'core:vendor-details' product.vendor.vid %}">Name:{{product.vendor.title}}</small></a>
+                    </p>
                     <p>
                         <img src="{{product.vendor.image.url}}" class="img-fluid " alt="">
                     </p>
