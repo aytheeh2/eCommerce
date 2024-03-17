@@ -3,6 +3,9 @@ from userauth.models import User
 # pip install django-shortuuidfield
 from shortuuid.django_fields import ShortUUIDField
 
+# pip install django-taggit
+from taggit.managers import TaggableManager
+
 from django.utils.html import mark_safe
 
 
@@ -102,7 +105,10 @@ class Product(models.Model):
     old_price = models.DecimalField(
         max_digits=9999999, decimal_places=2, default="2.99")
     specifications = models.TextField(null=True, blank=True)
+
     # tags = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True)
+    tags = TaggableManager(blank=True)
+
     product_status = models.CharField(
         choices=STATUS, max_length=10, default="in_review")
     status = models.BooleanField(default=True)
@@ -133,7 +139,8 @@ class Product(models.Model):
 class ProductImages(models.Model):
     images = models.ImageField(
         upload_to='product-images', default='product.jpg')
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(
+        Product, related_name='p_images', on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:

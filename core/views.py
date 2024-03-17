@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from .models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address
 
+# taggit
+from taggit.models import Tag
+
 
 def home_view(request):
     Products = Product.objects.filter(
@@ -39,9 +42,12 @@ def products_detail_view(request, pid):
         category=product.category, product_status='published'
     ).exclude(pid=product.pid)
 
+    p_images = product.p_images.all()
+
     context = {
         'product': product,
         'related_products': related_products,
+        'p_images': p_images,
     }
 
     return render(request, 'core/product-detail.html', context=context)
@@ -86,3 +92,15 @@ def vendor_shop(request, vid):
         'products_of_vendor': products_of_vendor,
     }
     return render(request, 'core/vendor_shop.html', context)
+
+
+def tags(request, tag):
+
+    tag = get_object_or_404(Tag, name=tag)
+    tag_products = Product.objects.filter(tags__in=[tag])
+
+    context = {
+        'tag_products': tag_products,
+        'tag': tag,
+    }
+    return render(request, 'core/tag.html', context)

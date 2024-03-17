@@ -20,4 +20,7 @@ urlpatterns = [
     path('vendor/<vid>/', views.vendor_details, name='vendor-details'),
     path('vendor/<vid>/shop/', views.vendor_shop, name='vendor-shop'),
 
+    # Tags
+    path('tags/<tag>/', views.tags, name='tags'),
+
 ]
