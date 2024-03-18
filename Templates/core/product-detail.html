@@ -2,7 +2,7 @@
 {%block title%}{%endblock title%}
 {%block content%}
 <div class="container my-4 bg-body-tertiary rounded-3">
-    <div class="row justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center ">
         <div class="col-lg-9 col-md-12 ">
             <!-- Adjusted the column size for larger screens and made it full width for smaller screens -->
             <div class="row">
@@ -68,11 +68,54 @@
                     </p>
                     <p class="m-1"><small>Authentic Rating:{{product.vendor.authentic_rating}}%</small></p>
                     <p class="m-1"><small>Authentic Rating:{{product.vendor.authentic_rating}}%</small></p>
-                    <p class="m-1"><small>Contact:{{product.vendor.contact}}%</small></p>
+                    <p class="m-1"><small>Contact:{{product.vendor.contact}}</small></p>
                     <!-- <p>Address:{{product.vendor.address}}%</p>  -->
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row bg-body-tertiary align-items-start justify-content-center border">
+        <h3 class="lead text-center mt-5 fs-3">{{reviews_of_product.count}} Review{{reviews_of_product|pluralize}}</h3>
+        <h4 class="lead text-center"><span class="badge bg-primary ">{{average_rating|floatformat}}&nbsp;<i
+                    class="bi bi-star-fill"></i> </span></h4>
+
+        <!-- review accordions -->
+        <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 p-3 my-2">
+            <div id="display_after_review_posted"></div>
+            {% for i in reviews_of_product %}
+            <div class="card border m-3 p-3">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h5 class="card-title">{{ i.user }}</h5>
+                            <p class="card-text mb-1">{{ i.date|date:"h:i d M, Y" }}</p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <span class="badge bg-primary">{{ i.rating }}/5 <i class="bi bi-star-fill"></i></span>
+                        </div>
+                    </div>
+                    <p class="card-text">{{ i.review }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- end review accordions -->
+
+        {% if request.user.is_authenticated %}
+        {% if can_review %}
+        <div class="col-xl-4 col-lg-10 col-md-12 col-sm-12 p-3 my-2 border shadow-sm" id="review_div">
+            <h3 class="display-6">Add Review</h3>
+            <form action="{% url 'core:ajax-add-review' product.pid %}" class="p-3" id="review_Form" method="POST">
+                {% csrf_token %}
+                {{ review_form.review }}
+                {{ review_form.rating }}<br>
+                <button type="submit" class="btn btn-success mt-2">Submit</button>
+            </form>
+        </div>
+        {% endif %}
+        {% endif %}
+
     </div>
 </div>
 
@@ -121,6 +164,8 @@
         </div>
     </div>
 </div>
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
     integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

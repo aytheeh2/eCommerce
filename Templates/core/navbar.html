@@ -1,76 +1,103 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border-bottom p-3 animated-dropdown"
-    data-bs-theme="dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'core:home' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Categories
-                    </a>
-                    <ul class="dropdown-menu">
-                        {% for i in categories_context %}
-                        <li><a href="{% url 'core:category-details' i.cid %}" class="dropdown-item"
-                                href="#">{{i.title}}</a></li>
-                        {%endfor%}
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="{% url 'core:all-categories' %}">All Categories</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                </li>
-            </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            <ul class="navbar-nav">
-                {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link 3</a>
-                </li>
-                {%else%}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'userauth:login' %}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'userauth:sign-up' %}">Sign Up</a>
-                </li>
-                {%endif%}
-            </ul>
-            {% if request.user.is_authenticated %}
-            <div class="dropdown text-end">
-                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                </a>
-                <ul class="dropdown-menu text-small"
-                    style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 33.8462px, 0px);"
-                    data-popper-placement="bottom-end">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
+<head>
+    <style>
+        .scrollable-div {
+            overflow-x: auto;
+            /* Allow horizontal scrolling */
+            white-space: nowrap;
+            /* Prevent link text from wrapping */
+            /* Border for the scrollable div */
+            padding: 10px;
+            /* Adjust padding */
+        }
+
+        .scrollable-div a {
+            display: inline-block;
+            /* Display links in a row */
+            padding: 5px 10px;
+            /* Adjust link padding */
+            margin-right: 10px;
+            /* Adjust spacing between links */
+            text-decoration: none;
+            /* Remove underline */
+            color: #333;
+            /* Link color */
+        }
+
+        .scrollable-div a:hover {
+            color: blue;
+            /* Change link color to blue on hover */
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            /* Show dropdown menu on hover */
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'core:home' %}">Home</a>
                     </li>
-                    <li><a class="dropdown-item" href="{% url 'userauth:logout' %}">Sign out</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    </li>
                 </ul>
+
+                {% if request.user.is_authenticated%}
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'userauth:logout' %}">Logout</a>
+                    </li>
+                </ul>
+                {%else%}
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'userauth:login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'userauth:sign-up' %}">Sign Up</a>
+                    </li>
+                </ul>
+                {%endif%}
+
+
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+
             </div>
-            {%endif%}
         </div>
-    </div>
-</nav>
+    </nav>

@@ -1,9 +1,15 @@
+from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from .models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address
-
+from django.contrib.auth.decorators import login_required
 # taggit
 from taggit.models import Tag
+
+
+# for product reviews
+from .forms import ReviewForm
+from django.http import JsonResponse
 
 
 def home_view(request):
@@ -35,6 +41,8 @@ def products_list_view(request):
     return render(request, 'core/products-list.html', context=context)
 
 
+# Redirect anonymous users to the login page
+# @login_required(login_url='/login/')
 def products_detail_view(request, pid):
 
     product = get_object_or_404(Product, pid=pid)
@@ -42,12 +50,46 @@ def products_detail_view(request, pid):
         category=product.category, product_status='published'
     ).exclude(pid=product.pid)
 
+    # extra images
     p_images = product.p_images.all()
+
+    # reviews
+    reviews_of_product = ProductReview.objects.filter(
+        product=product).order_by('-date')
+    # finding average review rating
+    total_rating = 0
+    for i in reviews_of_product:
+        total_rating += i.rating
+    try:
+        average_rating = total_rating/len(reviews_of_product)
+    except ZeroDivisionError:
+        average_rating = "Not Rated"
+
+    # for product review see ajax addReview view
+    review_form = ReviewForm()
+
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        user = request.user
+        # checks no.of reviews the user has for the product
+        no_of_reviews = ProductReview.objects.filter(
+            product=product, user=user)
+        can_review = False
+        # if user has more than 0 review, that means user has atleast 1 review, so set can_review to false so that form will be hidden using {% if can_review %}
+        if len(no_of_reviews) <= 0:
+            can_review = True
+    else:
+        user = None
+        can_review = True  # Allow anonymous users to review
 
     context = {
         'product': product,
         'related_products': related_products,
         'p_images': p_images,
+        'reviews_of_product': reviews_of_product,
+        'average_rating': average_rating,
+        'review_form': review_form,
+        'can_review': can_review,
     }
 
     return render(request, 'core/product-detail.html', context=context)
@@ -104,3 +146,33 @@ def tags(request, tag):
         'tag': tag,
     }
     return render(request, 'core/tag.html', context)
+
+
+def ajax_addreview(request, pid):
+    product = Product.objects.get(pid=pid)
+    user = request.user
+
+    review = ProductReview.objects.create(
+        user=user,
+        product=product,
+        review=request.POST['review'],
+        rating=request.POST['rating'],
+    )
+
+    # Get the date of the review to pass to ajax
+    review_date = review.date
+
+    context = {
+        'user': user.username,
+        'review': request.POST['review'],
+        'rating': request.POST['rating'],
+        # formatting the date as similar to the |date:"d M, Y" in the template
+        'date': review_date.strftime("%I:%M %p %d %b, %Y"),
+    }
+
+    return JsonResponse(
+        {
+            'bool': True,
+            'context': context
+        }
+    )
