@@ -73,14 +73,14 @@ def products_detail_view(request, pid):
         user = request.user
         # checks no.of reviews the user has for the product
         no_of_reviews = ProductReview.objects.filter(
-            product=product, user=user)
+            product=product, user=user).count()
         can_review = False
         # if user has more than 0 review, that means user has atleast 1 review, so set can_review to false so that form will be hidden using {% if can_review %}
-        if len(no_of_reviews) <= 0:
+        if no_of_reviews == 0:
             can_review = True
     else:
         user = None
-        can_review = True  # Allow anonymous users to review
+        can_review = False  # Allow anonymous users to review
 
     context = {
         'product': product,
