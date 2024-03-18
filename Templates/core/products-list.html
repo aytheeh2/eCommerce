@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
 {% block content %}
+{%load static %}
 
 <!-- start category ribbon -->
 <div class="container-fluid">
@@ -31,41 +32,47 @@
 <div class="container m-1 p-1 mx-auto">
     <div class="row justify-content-center align-items-stretch">
         <div class="col-lg-3 col-md-6 d-flex flex-column bg-body-tertiary">
-            <div class="rounded-4  my-3 text-center align-items-center border-2 bg-body-secondary">
+            <div class="rounded-4 my-3 text-center align-items-start border-2 bg-body-secondary p-5">
                 <p class="lead text-center pt-1">By Category</p>
-                <form>
-                    {% for c in categories_context %}
-                    <!-- <button class="btn btn-sm btn-dark m-1">{{ c.title }}</button> -->
-                    <input type="checkbox" name="" value="{{c.id}}" id="">{{c.title}}<br>
-                    {% endfor %}
-                </form>
+                {% for c in categories_context %}
+                <div class="form-check mb-2 d-flex align-items-center">
+                    <input class="form-check-input me-2 filter-checkbox" data-filter="category" type="checkbox"
+                        name="checkbox" value="{{c.id}}" id="category{{c.id}}">
+                    <label class="form-check-label" for="category{{c.id}}">
+                        {{c.title}}
+                    </label>
+                </div>
+                {% endfor %}
             </div>
         </div>
+
         <div class="col-lg-3 col-md-6 d-flex flex-column bg-body-tertiary">
-            <div class="rounded-4  my-3 text-center align-items-center border-2 bg-body-secondary">
+            <div class="rounded-4 my-3 text-center align-items-start border-2 bg-body-secondary p-5">
                 <p class="lead text-center pt-1">By Vendors</p>
-                <form>
-                    {% for v in vendors_context %}
-                    <!-- <button class="btn btn-sm btn-dark m-1">{{ c.title }}</button> -->
-                    <input type="checkbox" name="" value="{{v.id}}" id="">{{v.title}}<br>
-                    {% endfor %}
-                </form>
+                {% for v in vendors_context %}
+                <div class="form-check mb-2 d-flex align-items-center ">
+                    <input class="form-check-input me-2 filter-checkbox" data-filter="vendor" type="checkbox"
+                        name="checkbox" value="{{v.id}}" id="vendor{{v.id}}">
+                    <label class="form-check-label" for="vendor{{v.id}}">
+                        {{v.title}}
+                    </label>
+                </div>
+                {% endfor %}
             </div>
         </div>
+
         <div class="col-lg-3 col-md-6 d-flex flex-column bg-body-tertiary">
             <div
                 class=" rounded-4 my-3 text-center align-items-center justify-content-center border-2 bg-body-secondary">
                 <p class="lead text-center pt-1">By Price</p>
-                <form action="">
-                    <div class="d-flex flex-column align-items-start ms-3 ">
-                        <input type="range" class="" min="1" max="999999" value="0" name="" id=""><br>
-                        <input type="checkbox" value="100" name="price" id="">100<br>
-                        <input type="checkbox" value="500" name="price" id="">500<br>
-                        <input type="checkbox" value="1000" name="price" id="">1000<br>
-                        <input type="checkbox" value="10000" name="price" id="">10000<br>
-                        <input type="submit" class="btn btn-primary" value="Apply Filter" name="" id="">
-                    </div>
-                </form>
+                <div class="d-flex flex-column align-items-start ms-3 ">
+                    <input type="range" class="" min="1" max="999999" value="0" name="" id=""><br>
+                    <input type="checkbox" value="100" name="price" id="">100<br>
+                    <input type="checkbox" value="500" name="price" id="">500<br>
+                    <input type="checkbox" value="1000" name="price" id="">1000<br>
+                    <input type="checkbox" value="10000" name="price" id="">10000<br>
+                    <input type="submit" class="btn btn-primary" value="Apply Filter" name="" id="">
+                </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6 d-flex flex-column bg-body-tertiary">

@@ -3,13 +3,49 @@ setTimeout(function () {
     $(".alert").alert("close");
 }, 5000);
 
+console.log('scripts.js working');
+
+$(document).ready(function () {
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 15,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 3000, // Set autoplay speed in milliseconds (e.g., 3000ms = 3 seconds)
+        dots: false,
+        responsive: {
+            0: {
+                items: 1 // Display 1 item on screens smaller than 600px
+            },
+            576: {
+                items: 2 // Display 2 items on screens between 576px and 767px
+            },
+            768: {
+                items: 3 // Display 3 items on screens between 768px and 991px
+            },
+            992: {
+                items: 4 // Display 4 items on screens between 992px and 1199px
+            },
+            1200: {
+                items: 6 // Display 6 items on screens larger than or equal to 1200px
+            }
+        }
+    });
+
+
+
+    console.log('Checkbox ready');
+    $(".filter-checkbox").on("click", function () {
+        console.log('Checkbox clicked');
+    });
+
+
+});
+
 // Product review AJAX
 // Your AJAX code for submitting product reviews would go here
 // Make sure it's structured properly and handles success and error cases
-console.log('working');
 
-const MonthNames = [
-    'Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 $("#review_Form").submit(function (e) {
     e.preventDefault();
@@ -62,3 +98,6 @@ $("#review_Form").submit(function (e) {
         }
     });
 });
+
+
+
