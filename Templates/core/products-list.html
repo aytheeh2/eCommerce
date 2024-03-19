@@ -33,7 +33,7 @@
     <div class="row justify-content-center align-items-stretch">
         <div class="col-lg-3 col-md-6 d-flex flex-column bg-body-tertiary">
             <div class="rounded-4 my-3 text-center align-items-start border-2 bg-body-secondary p-5">
-                <p class="lead text-center pt-1">By Category</p>
+                <p class="lead text-center ">By Category</p>
                 {% for c in categories_context %}
                 <div class="form-check mb-2 d-flex align-items-center">
                     <input class="form-check-input me-2 filter-checkbox" data-filter="category" type="checkbox"
@@ -48,7 +48,7 @@
 
         <div class="col-lg-3 col-md-6 d-flex flex-column bg-body-tertiary">
             <div class="rounded-4 my-3 text-center align-items-start border-2 bg-body-secondary p-5">
-                <p class="lead text-center pt-1">By Vendors</p>
+                <p class="lead text-center ">By Vendors</p>
                 {% for v in vendors_context %}
                 <div class="form-check mb-2 d-flex align-items-center ">
                     <input class="form-check-input me-2 filter-checkbox" data-filter="vendor" type="checkbox"
@@ -62,19 +62,28 @@
         </div>
 
         <div class="col-lg-3 col-md-6 d-flex flex-column bg-body-tertiary">
-            <div
-                class=" rounded-4 my-3 text-center align-items-center justify-content-center border-2 bg-body-secondary">
-                <p class="lead text-center pt-1">By Price</p>
-                <div class="d-flex flex-column align-items-start ms-3 ">
-                    <input type="range" class="" min="1" max="999999" value="0" name="" id=""><br>
-                    <input type="checkbox" value="100" name="price" id="">100<br>
-                    <input type="checkbox" value="500" name="price" id="">500<br>
-                    <input type="checkbox" value="1000" name="price" id="">1000<br>
-                    <input type="checkbox" value="10000" name="price" id="">10000<br>
-                    <input type="submit" class="btn btn-primary" value="Apply Filter" name="" id="">
+            <div class="rounded-4 my-3 text-center align-items-start border-2 bg-body-secondary p-5">
+                <p class="lead text-center ">By Price</p>
+                <div class=" mb-2 d-flex align-items-center ">
+                    <input class="w-100  my-2 slider-range" type="range" id="range"
+                        min="{{ min_max_price_context.price__min }}" max="{{ min_max_price_context.price__max }}"
+                        oninput="max_price.value=this.value" value="{{ min_max_price_context.price__min|floatformat }}">
                 </div>
+                <input type="number" class="form-control w-100 my-2" name="" id="max_price"
+                    min="{{ min_max_price_context.price__min }}" max="{{ min_max_price_context.price__max }}"
+                    placeholder="Price" onkeyup="range.value=this.value"
+                    value="{{ min_max_price_context.price__min|floatformat }}">
+                <div class="d-flex justify-content-between">
+                    <p><small><strong>From: ${{ min_max_price_context.price__min|floatformat }}</strong></small></p>
+                    <p><small><strong>To: ${{ min_max_price_context.price__max|floatformat }}</strong></small></p>
+                    <!-- <p id="invalid_price" class="text-danger fw-bold"><small><strong>Invalid Price!</strong></small></p> -->
+                </div>
+                <button type="button" class="w-100 btn btn-success btn" id="price-filter-btn">Filter</button>
             </div>
         </div>
+
+
+
         <div class="col-lg-3 col-md-6 d-flex flex-column bg-body-tertiary">
             <div class="rounded-4 my-3 text-center align-items-center border-2 bg-body-secondary">
                 <p class="lead text-center pt-1">By Tags</p>

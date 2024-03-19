@@ -36,7 +36,7 @@ def all_categories(request):
 
 def products_list_view(request):
     Products = Product.objects.filter(
-        featured=True, product_status='published')
+        product_status='published').order_by('-date')
     Vendors = Vendor.objects.all()
     context = {
         'Products': Products,
@@ -195,6 +195,16 @@ def filter_product(request):
     if len(vendors) > 0:
         Products = Product.objects.filter(
             vendor__id__in=vendors).distinct()
+
+    # filtering by price
+    min_price = request.GET['min_price']
+    max_price = request.GET['max_price']
+
+    Products = Product.objects.filter(
+        product_status='published', price__gte=min_price).distinct()
+
+    Products = Product.objects.filter(
+        product_status='published', price__lte=max_price).distinct()
 
     context = {
         'Products': Products,

@@ -35,9 +35,16 @@ $(document).ready(function () {
 
 
     console.log('Checkbox ready');
-    $(".filter-checkbox").on("click", function () {
+    $(".filter-checkbox,#price-filter-btn").on("click", function () {
         console.log('Checkbox clicked');
         let filter_object = {}
+
+        // for price filtering
+        let min_price = $("#max_price").attr("min");
+        let max_price = $("#max_price").val();
+
+        filter_object.min_price = min_price;
+        filter_object.max_price = max_price;
 
         $(".filter-checkbox").each(function () {
             let filter_value = $(this).val()
@@ -64,8 +71,42 @@ $(document).ready(function () {
                 $("#filtered-product").html(response.data)
             }
         })
-
     });
+
+
+    //checking for input range slider exceeds value
+    $("#max_price").on("blur", function () {
+        let min_price = $(this).attr('min');
+        let max_price = $(this).attr('max');
+        let current_price = $(this).val();
+
+
+        console.log('current_price', current_price);
+        console.log('max_price', max_price);
+        console.log('min_price', min_price);
+
+        if (current_price < parseInt(min_price) || current_price > parseInt(max_price)) {
+            console.log('invalid price');
+            min_PRICE = Math.round(min_price * 100) / 100;
+            max_PRICE = Math.round(max_price * 100) / 100;
+
+            console.log(min_PRICE);
+            console.log(max_PRICE);
+
+            alert(" Price must be between $" + min_PRICE + " and $" + max_PRICE + "!");
+            // resetting the slider and inputs
+            $(this).val(min_PRICE);
+            $("#range").val(min_PRICE);
+            $(this).focus();
+
+            return false;
+        }
+    })
+
+
+
+
+
 })
 
 // Product review AJAX
@@ -124,6 +165,4 @@ $("#review_Form").submit(function (e) {
         }
     });
 });
-
-
 
