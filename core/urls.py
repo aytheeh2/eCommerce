@@ -26,4 +26,8 @@ urlpatterns = [
     # Product Review AJAX
     path('ajax-add-review/<pid>/', views.ajax_addreview, name='ajax-add-review'),
 
+
+    # product ajax filtering
+    path('filter-products/',views.filter_product,name='filter-product')
+
 ]

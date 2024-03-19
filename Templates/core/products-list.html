@@ -86,31 +86,31 @@
         </div>
         <div class="col-lg-12 col-md-12 bg-body-secondary rounded-3 ">
             <!-- start album -->
-            <div class="album py-5 ">
+            <div class="album py-5">
                 <div class="container">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <div id="filtered-product" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                         {% for p in Products %}
                         <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6">
                             <div class="card shadow-sm border-1 rounded-pill rounded-3"
                                 style="max-width: 250px; position: relative;">
                                 <div class="position-absolute top-0 start-0 translate-middle badge bg-danger"
                                     style="z-index: 1; margin-left: 20px;">
-                                    -{{p.get_percentage|floatformat:0}}% Off
+                                    -{{ p.get_percentage|floatformat:0 }}% Off
                                 </div>
                                 <a href="{% url 'core:product-details' p.pid %}" class="text-decoration-none text-dark">
                                     <div class="ratio ratio-4x3">
                                         <img src="{{ p.image.url }}"
-                                            class="bd-placeholder-img card-img-top img-responsive border-1 border-bottom  rounded-top"
+                                            class="bd-placeholder-img card-img-top img-responsive border-1 border-bottom rounded-top"
                                             width="100%" height="100%" role="img" preserveAspectRatio="xMidYMid slice"
                                             focusable="false">
                                     </div>
                                     <div class="card-body bg-body-tertiary">
-                                        <p class="card-title text-center fs-5">{{p.title}}</p>
+                                        <p class="card-title text-center fs-5">{{ p.title }}</p>
                                 </a>
-                                <p class="card-title text-center fs-6">${{p.price}}</p>
-                                <p class="card-text text-center"><small class="text-body-secondary fs-6">Sold by
-                                        {{p.vendor}}</small></p>
-                                <p class="card-text">{{p.description}}</p>
+                                <p class="card-title text-center fs-6">${{ p.price }}</p>
+                                <p class="card-text text-center"><small class="text-body-secondary fs-6">Sold by {{
+                                        p.vendor }}</small></p>
+                                <p class="card-text">{{ p.description }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group bg-body-tertiary">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">Buy</button>
@@ -121,12 +121,11 @@
                             </div>
                         </div>
                     </div>
-                    {%endfor%}
+                    {% endfor %}
                 </div>
             </div>
+            <!-- end album -->
         </div>
-        <!-- end album -->
     </div>
-</div>
 </div>
 {%endblock content%}

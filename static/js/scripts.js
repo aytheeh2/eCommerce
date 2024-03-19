@@ -37,10 +37,36 @@ $(document).ready(function () {
     console.log('Checkbox ready');
     $(".filter-checkbox").on("click", function () {
         console.log('Checkbox clicked');
+        let filter_object = {}
+
+        $(".filter-checkbox").each(function () {
+            let filter_value = $(this).val()
+            let filter_key = $(this).data("filter")
+
+            // console.log(filter_key, 'filter_key');
+            // console.log(filter_value, 'filter_value');
+
+            filter_object[filter_key] = Array.from(document.querySelectorAll("input[data-filter=" + filter_key + "]:checked")).map(function (element) {
+                return element.value
+            })
+        })
+        console.log('filter_object', filter_object);
+        $.ajax({
+            url: '/filter-products',
+            data: filter_object,
+            dataType: 'json',
+            beforeSend: function () {
+                console.log('trying to filter product');
+
+            },
+            success: function (response) {
+                console.log(response, 'ajax filter success');
+                $("#filtered-product").html(response.data)
+            }
+        })
+
     });
-
-
-});
+})
 
 // Product review AJAX
 // Your AJAX code for submitting product reviews would go here

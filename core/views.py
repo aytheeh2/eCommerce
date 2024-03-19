@@ -11,6 +11,9 @@ from taggit.models import Tag
 from .forms import ReviewForm
 from django.http import JsonResponse
 
+# for ajax product filtering
+from django.template.loader import render_to_string
+
 
 def home_view(request):
     Products = Product.objects.filter(
@@ -176,3 +179,29 @@ def ajax_addreview(request, pid):
             'context': context
         }
     )
+
+
+def filter_product(request):
+    categories = request.GET.getlist('category[]')
+    vendors = request.GET.getlist('vendor[]')
+
+    Products = Product.objects.filter(
+        product_status='published',).order_by('-id').distinct()
+
+    if len(categories) > 0:
+        Products = Product.objects.filter(
+            category__id__in=categories).distinct()
+
+    if len(vendors) > 0:
+        Products = Product.objects.filter(
+            vendor__id__in=vendors).distinct()
+
+    context = {
+        'Products': Products,
+    }
+
+    data = render_to_string("core/async/products-list.html", context)
+
+    return JsonResponse({
+        "data": data
+    })
