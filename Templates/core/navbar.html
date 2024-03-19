@@ -73,7 +73,7 @@
                 {% if request.user.is_authenticated%}
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Cart</a>
+                        <a class="nav-link active" href="#">Cart {{request.session.cart_data_obj|length}}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="#">Orders</a>

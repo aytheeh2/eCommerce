@@ -28,6 +28,11 @@ urlpatterns = [
 
 
     # product ajax filtering
-    path('filter-products/',views.filter_product,name='filter-product')
+    path('filter-products/', views.filter_product, name='filter-product'),
+
+    # add to cart ajax
+    path('add-to-cart/', views.add_to_cart, name='add-to-cart'),
+
+
 
 ]

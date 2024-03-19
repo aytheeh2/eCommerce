@@ -24,18 +24,28 @@
                 <div class="col-lg-6 col-md-5 bg-body-tertiary d-flex justify-content-center align-items-center">
                     <div class="text-center">
                         <h3>add image carousel</h3>
-                        <p class="display-5">{{ product.title }}</p>
+                        <p class="display-5 ">{{ product.title }}</p>
                         <p><small class="fs-6">-{{ product.get_percentage|floatformat:0 }}% OFF</small></p>
-                        <p class="lead mb-1 fw-normal">${{ product.price }}</p>
+                        <!-- price class  -->
+                        <p class="lead mb-1 fw-normal ">$
+                            <span class="lead mb-1 fw-normal product-price">{{product.price }}</span>
+                        </p>
+                        <!-- price class  -->
                         <p><small class="fs-6">{{ product.description }}</small></p>
                         <p><small class="fs-6">{% if product.tags.count >= 1 %}Tags:{% for tag in product.tags.all %}<a
                                     class="text-decoration-none" href=" {% url 'core:tags' tag.name %}">
                                     #{{tag.name}}</a>{%endfor%}{%endif%}</small>
                         </p>
                         <p><small class="">Sold by: {{ product.vendor }}</small></p>
+                        <!--  -->
+
+                        <!--  -->
+                        <input type="number" class="w-100 my-2 form-control" name="" value="1" id="product-quantity">
                         <div class="btn-group">
                             <button class="btn btn-sm btn-dark m-1">Buy Now</button>
-                            <button class="btn btn-sm btn-dark m-1">Add To Cart</button>
+                            <input type="hidden" class="product-id" value="{{product.id}}" name="" id="">
+                            <input type="hidden" class="product-title-" value="{{product.title}}" name="" id="">
+                            <button class="btn btn-sm btn-dark m-1 add-to-cart-btn" id="add-to-cart-btn">Add To Cart</button>
                         </div>
                     </div>
                 </div>
@@ -119,7 +129,7 @@
 
     </div>
 </div>
-
+{% if related_products%}
 <div class="container">
     <p class="display-5 text-center my-5">Related Products</p>
 </div>
@@ -165,44 +175,9 @@
         </div>
     </div>
 </div>
-
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
-    integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    $(document).ready(function () {
-        $('.owl-carousel').owlCarousel({
-            loop: true,
-            margin: 15,
-            nav: true,
-            autoplay: true,
-            autoplayTimeout: 3000, // Set autoplay speed in milliseconds (e.g., 3000ms = 3 seconds)
-            dots: false,
-            responsive: {
-                0: {
-                    items: 1 // Display 1 item on screens smaller than 600px
-                },
-                576: {
-                    items: 2 // Display 2 items on screens between 576px and 767px
-                },
-                768: {
-                    items: 3 // Display 3 items on screens between 768px and 991px
-                },
-                992: {
-                    items: 4 // Display 4 items on screens between 992px and 1199px
-                },
-                1200: {
-                    items: 6 // Display 6 items on screens larger than or equal to 1200px
-                }
-            }
-        });
-
-        
-    });
-</script>
+{%else%}
+<div class="container">
+    <p class="display-5 text-center my-5">No Related Products</p>
+</div>
+{%endif%}
 {%endblock%}

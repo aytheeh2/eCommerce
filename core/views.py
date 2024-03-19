@@ -188,6 +188,16 @@ def filter_product(request):
     Products = Product.objects.filter(
         product_status='published',).order_by('-id').distinct()
 
+    # filtering by price
+    min_price = request.GET['min_price']
+    max_price = request.GET['max_price']
+
+    Products = Product.objects.filter(
+        product_status='published').order_by('-date').distinct()
+
+    Products = Products.filter(price__gte=min_price)
+    Products = Products.filter(price__lte=max_price)
+
     if len(categories) > 0:
         Products = Product.objects.filter(
             category__id__in=categories).distinct()
@@ -195,16 +205,6 @@ def filter_product(request):
     if len(vendors) > 0:
         Products = Product.objects.filter(
             vendor__id__in=vendors).distinct()
-
-    # filtering by price
-    min_price = request.GET['min_price']
-    max_price = request.GET['max_price']
-
-    Products = Product.objects.filter(
-        product_status='published', price__gte=min_price).distinct()
-
-    Products = Product.objects.filter(
-        product_status='published', price__lte=max_price).distinct()
 
     context = {
         'Products': Products,
@@ -214,4 +214,41 @@ def filter_product(request):
 
     return JsonResponse({
         "data": data
+    })
+
+# @login_required
+
+
+def add_to_cart(request):
+    if request.user:
+        print('sssss')
+    else:
+        print('nooooooooooooo')
+
+    cart_product = {}
+
+    cart_product[str(request.GET['id'])] = {
+        'title': request.GET['title'],
+        'quantity': request.GET['quantity'],
+        'price': request.GET['price'],
+    }
+
+    if 'cart_data_obj' in request.session:
+
+        if str(request.GET['id']) in request.session['cart_data_obj']:
+            cart_data = request.session['cart_data_obj']
+            cart_data[str(request.GET['id'])]['quantity'] = int(
+                cart_product[str(request.GET['id'])]['quantity'])
+            cart_data.update(cart_data)
+            request.session['cart_data_obj'] = cart_data
+        else:
+            cart_data = request.session['cart_data_obj']
+            cart_data.update(cart_product)
+            request.session['cart_data_obj'] = cart_data
+    else:
+        request.session['cart_data_obj'] = cart_product
+
+    return JsonResponse({
+        "data": request.session['cart_data_obj'],
+        "total_cart_items": len(request.session['cart_data_obj'])
     })
