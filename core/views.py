@@ -231,6 +231,8 @@ def add_to_cart(request):
         'title': request.GET['title'],
         'quantity': request.GET['quantity'],
         'price': request.GET['price'],
+        'image': request.GET['image'],
+        'pid': request.GET['pid'],
     }
 
     if 'cart_data_obj' in request.session:
@@ -252,3 +254,7 @@ def add_to_cart(request):
         "data": request.session['cart_data_obj'],
         "total_cart_items": len(request.session['cart_data_obj'])
     })
+
+
+def cart_view(request):
+    return render(request,'core/cart.html')

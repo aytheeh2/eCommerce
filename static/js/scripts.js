@@ -1,13 +1,13 @@
+console.log("scripts.js working");
+
 // Timer for alerts
 setTimeout(function () {
   $(".alert").alert("close");
 }, 5000);
 
-console.log("scripts.js working");
-
 $(document).ready(function () {
   $(".owl-carousel").owlCarousel({
-    loop: true,
+    loop: false,
     margin: 15,
     nav: false,
     autoplay: true,
@@ -171,47 +171,50 @@ $(".add-to-cart-btn").on("click", function () {
   let product_title = $(".product-title-" + index).val();
   let product_id = $(".product-id-" + index).val();
   let product_price = $(".current-product-price-" + index).text();
-  let product_pid = $(".product-pid-" + index).text();
-  let product_image = $(".product-image-" + index);
+  let product_pid = $(".product-pid-" + index).val();
+  let product_image = $(".product-image-" + index).val();
 
   console.log(
     quantity,
     "quantity",
     product_title,
-    "product_title"
-    // product_id,
-    // "product_id",
-    // product_price,
-    // "product_price",
-    // product_pid,
-    // "product_pid",
-    // product_image,
-    // "product_image",
-    // index,
-    // "index"
+    "product_title",
+    product_id,
+    "product_id",
+    product_price,
+    "product_price",
+    product_pid,
+    "product_pid",
+    product_image,
+    "product_image",
+    index,
+    "index"
   );
 
-  //   $.ajax({
-  //     url: "/add-to-cart",
-  //     data: {
-  //       id: product_id,
-  //       title: product_title,
-  //       price: product_price,
-  //       quantity: quantity,
-  //     },
-  //     dataType: "json",
+  $.ajax({
+    url: "/add-to-cart",
+    data: {
+      id: product_id,
+      pid: product_pid,
+      image: product_image,
+      quantity: quantity,
+      title: product_title,
+      price: product_price,
+    },
+    dataType: "json",
 
-  //     beforeSend: function () {
-  //       console.log("trying to add to cart");
-  //     },
+    beforeSend: function () {
+      console.log("trying to add to cart");
+    },
 
-  //     success: function (response) {
-  //       // $(this).html("Added To Cart");
-  //       // this_val.html("Added To Cart");
-  //       $("#add-to-cart-btn").html("Added To Cart");
-  //       console.log("add to cart success");
-  //     },
-  //   });
+    success: function (response) {
+      // $(this).html("Added To Cart");
+      // this_val.html("Added To Cart");
+      $(this_val).html("Added To Cart ✓");
+      $(".cart-items-count").text(response.totalcartitems);
+      console.log("add to cart success");
+    },
+  });
 });
 
 // // add to cart

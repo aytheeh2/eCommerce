@@ -117,14 +117,26 @@
                                         <p class="card-title text-center fs-5">{{ p.title }}</p>
                                 </a>
                                 <p class="card-title text-center fs-6">${{ p.price }}</p>
-                                <p class="card-text text-center"><small class="text-body-secondary fs-6">Sold by {{
-                                        p.vendor }}</small></p>
+                                <p class="card-text text-center"><small class="text-body-secondary fs-6">
+                                    Sold by {{p.vendor }}</small></p>
                                 <p class="card-text">{{ p.description }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group bg-body-tertiary">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Buy</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Add To
-                                            Cart</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                            Buy
+                                        </button>
+
+                                        <input type="hidden" value="1" id="product-quantity"
+                                            class="product-quantity-{{ i.id }}" />
+                                        <input type="hidden" class="product-pid-{{ i.id }}" value="{{ i.pid }}" />
+                                        <input type="hidden" class="product-image-{{ i.id }}" value="{{ i.image.url }}"
+                                            name="" />
+                                        <input type="hidden" class="product-title-{{ i.id }}" value="{{ i.title }}" />
+                                        <input type="hidden" class="product-id-{{i.id}}" value="{{i.id}}" />
+                                        <button type="button" class="btn btn-sm btn-outline-secondary add-to-cart-btn"
+                                            data-index="{{i.id}}" id="add-to-cart-btn">
+                                            Add ToCart
+                                        </button>
                                     </div>
                                 </div>
                             </div>

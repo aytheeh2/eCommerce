@@ -33,6 +33,9 @@ urlpatterns = [
     # add to cart ajax
     path('add-to-cart/', views.add_to_cart, name='add-to-cart'),
 
+    # cart
+    path('cart/', views.cart_view, name='cart-view'),
+
 
 
 ]

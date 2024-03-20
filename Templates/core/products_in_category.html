@@ -177,17 +177,47 @@
                   >
                     <div class="btn-group bg-body-tertiary">
                       <button
-                        type="button"
-                        class="btn btn-sm btn-outline-secondary"
-                      >
-                        Buy
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-secondary"
-                      >
-                        Add To Cart
-                      </button>
+                      type="button"
+                      class="btn btn-outline-secondary btn-sm"
+                    >
+                      Buy
+                    </button>
+
+                    <input
+                      type="hidden"
+                      value="1"
+                      id="product-quantity"
+                      class="product-quantity-{{ i.id }}"
+                    />
+                    <input
+                      type="hidden"
+                      class="product-pid-{{ i.id }}"
+                      value="{{ i.pid }}"
+                    />
+                    <input
+                      type="hidden"
+                      class="product-image-{{ i.id }}"
+                      value="{{ i.image.url }}"
+                      name=""
+                    />
+                    <input
+                      type="hidden"
+                      class="product-title-{{ i.id }}"
+                      value="{{ i.title }}"
+                    />
+                    <input
+                      type="hidden"
+                      class="product-id-{{i.id}}"
+                      value="{{i.id}}"
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary btn-sm add-to-cart-btn"
+                      data-index="{{i.id}}"
+                      id="add-to-cart-btn"
+                    >
+                      Add ToCart
+                    </button>
                     </div>
                   </div>
                 </div>
