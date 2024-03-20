@@ -93,8 +93,8 @@
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" href="{% url 'core:cart-view' %}">
-              <span class="text-success-emphasis">
-                <i class="bi bi-bag-check"></i>
+              <i class="bi bi-bag-check"></i>
+              <span class="text-success-emphasis cart-items-count">
                 {{request.session.cart_data_obj|length}}</span
               ></a
             >
@@ -112,8 +112,8 @@
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" href="{% url 'core:cart-view' %}">
-              <span class="text-success-emphasis">
-                <i class="bi bi-bag-check"></i>
+              <i class="bi bi-bag-check"></i>
+              <span class="text-success-emphasis cart-items-count">
                 {{request.session.cart_data_obj|length}}</span
               ></a
             >

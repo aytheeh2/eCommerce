@@ -36,6 +36,13 @@ urlpatterns = [
     # cart
     path('cart/', views.cart_view, name='cart-view'),
 
+    # delete from cart
+    path('delete-from-cart/', views.delete_from_cart, name='delete-from-cart'),
+
+    # update items in cart by pressing the button refresh
+    path('update-items-in-cart/', views.update_items_in_cart,
+         name='update-items-in-cart'),
+
 
 
 ]

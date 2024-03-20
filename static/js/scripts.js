@@ -217,6 +217,62 @@ $(".add-to-cart-btn").on("click", function () {
   });
 });
 
+$(".delete-product").on("click", function () {
+  console.log("delete-product btn clicked");
+  let this_val = $(this);
+  let product_id = this_val.attr("data-product");
+  console.log("product_id:", product_id);
+
+  $.ajax({
+    url: "/delete-from-cart",
+    data: {
+      id: product_id,
+    },
+    dataType: "json",
+
+    beforeSend: function () {
+      console.log("trying to delete from cart");
+      this_val.hide();
+    },
+
+    success: function (response) {
+      $(".cart-items-count").html(response.totalcartitems);
+      $("#cart-list").html(response.data);
+      this_val.show();
+      console.log("deleted from cart successfully");
+    },
+  });
+});
+
+$(".update-product").on("click", function () {
+  console.log("update-product btn clicked");
+  let this_val = $(this);
+  let product_id = this_val.attr("data-product");
+  console.log(product_id);
+  let product_quantity = $(".product-quantity-" + product_id).val();
+  console.log("product_quantity:", product_quantity);
+  $.ajax({
+    url: "/update-items-in-cart",
+    dataType: "json",
+    data: {
+      id: product_id,
+      quantity: product_quantity,
+    },
+
+    beforeSend: function () {
+      console.log("trying to update cart");
+      this_val.hide();
+    },
+
+    success: function (response) {
+      this_val.show();
+      $(".cart-items-count").html(response.totalcartitems);
+      $("#cart-list").html(response.data);
+      console.log("cart updated successfully");
+    },
+  });
+});
+
 // // add to cart
 // $(".add-to-cart-btn").on("click", function () {
 //     console.log("add to cart clicked");
