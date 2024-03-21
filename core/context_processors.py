@@ -8,9 +8,9 @@ def default(request):
     categories_context = Category.objects.all()
     vendors_context = Vendor.objects.all()
     try:
-        address = Address.objects.get(user=request.user)
+        address_context = Address.objects.get(user=request.user)
     except:
-        address = None
+        address_context = None
 
     # for product filtering based on price
     min_max_price = Product.objects.aggregate(Min("price"), Max("price"))
@@ -18,6 +18,6 @@ def default(request):
     return {
         'categories_context': categories_context,
         'vendors_context': vendors_context,
-        'address_context': address,
+        'address_context': address_context,
         'min_max_price_context': min_max_price,
     }

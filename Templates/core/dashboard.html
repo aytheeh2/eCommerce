@@ -70,41 +70,92 @@
           <div class="col bg-secondary">f</div>
         </div>
       </div> -->
-      <div class="container">
-        <p class="display-6">Welcome {{request.user}}.</p>
-      </div>
-      <div class="col">
-        <div id="orders-section" style="display: none">
-          <table class="table table-bordered table-hover">
-            <thead class="table-secondary">
-              <tr>
-                <th scope="col">INVOICE NO</th>
-                <th scope="col">Date</th>
-                <th scope="col">Status</th>
-                <th scope="col">Price</th>
-                <th scope="col">Paid Status</th>
-                <th scope="col">View</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for i in orders %}
-              <tr>
-                <td>{{ i.id }}</td>
-                <td>{{ i.order_date }}</td>
-                <td>{{ i.product_status|title }}</td>
-                <td>${{ i.price }}</td>
-                {% if i.paid_status %}
-                <td class="text-success fw-bold">Paid</td>
-                {%else%}
-                <td class="text-danger fw-bold">Unpaid</td>
-                {%endif%}
-                <td><a href="{% url 'core:order-details' i.id %}">View</a></td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+
+      <div class="row">
+        <div class="col-12">
+          <p class="display-6">Welcome {{request.user}}.</p>
+          <div id="orders-section" style="display: none">
+            <table class="table table-bordered table-hover">
+              <thead class="table-secondary">
+                <tr>
+                  <th scope="col">INVOICE NO</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Paid Status</th>
+                  <th scope="col">View</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in orders %}
+                <tr>
+                  <td>{{ i.id }}</td>
+                  <td>{{ i.order_date }}</td>
+                  <td>{{ i.product_status|title }}</td>
+                  <td>${{ i.price }}</td>
+                  {% if i.paid_status %}
+                  <td class="text-success fw-bold">Paid</td>
+                  {%else%}
+                  <td class="text-danger fw-bold">Unpaid</td>
+                  {%endif%}
+                  <td>
+                    <a href="{% url 'core:order-details' i.id %}">View</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div
+            id="address-section"
+            class="rounded rounded-3 bg-body-tertiary p-3 m-2"
+            style="display: none"
+          >
+            <div class="border border-2 p-3 text-center">
+              <p class="lead fw-bold">Billing Address</p>
+              <form action="" method="post" class="d-inline-block">
+                {%csrf_token%}
+                <div class="d-inline-block align-middle text-left">
+                  <input
+                    name="address"
+                    type="text"
+                    placeholder="Address"
+                    class="form-control w-100 my-2 p-3 d-inline-block"
+                    required
+                  /><br />
+                  <input
+                    type="text"
+                    name="phone"
+                    placeholder="Phone"
+                    class="form-control w-100 my-2 d-inline-block"
+                    required
+                  /><br />
+                  <input
+                    type="submit"
+                    class="btn btn-success btn-block"
+                    value="Save"
+                    name=""
+                    id=""
+                  />
+                </div>
+              </form>
+            </div>
+
+            <div class="row">
+              {% for i in addresses %}
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="border p-4 m-1">
+                  <h4>Address {{forloop.counter}}</h4>
+                  <p class="lead">{{i.address}}</p>
+                  <p class="lead">Phone {{i.phone}}</p>
+                  <p class="lead">Active:{{i.status}}</p>
+                  <button class="btn btn-primary">Make Default</button>
+                </div>
+              </div>
+              {%endfor%}
+            </div>
+          </div>
         </div>
-        <div id="address-section" style="display: none">addresss</div>
       </div>
     </div>
   </div>
