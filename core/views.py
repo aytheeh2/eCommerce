@@ -399,7 +399,7 @@ def customer_dashboard(request):
     orders = CartOrder.objects.filter(user=request.user).order_by('-id')
     # order_items = CartOrderItems.objects.filter(order=orders)
 
-    addresses = Address.objects.filter(user=request.user)
+    addresses = Address.objects.filter(user=request.user).order_by('-status')
     # address form
     if request.method == "POST":
         new_address = Address.objects.create(
@@ -434,13 +434,12 @@ def order_details(request, id):
 @login_required
 def make_address_default(request):
     id = int(request.GET['index'])
+    # addresses.save(commit=False)
     addresses = Address.objects.filter(user=request.user)
-    for i in addresses:
-        addresses.status = False
-    addresses.save(commit=False)
-    address = Address.objects.get(pk=id)
+    addresses.update(status=False)
+    address = addresses.get(pk=id)
     address.status = True
     address.save()
     return JsonResponse({
-        'inded': id
+        "index": id
     })

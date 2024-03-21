@@ -43,6 +43,7 @@ class WishlistAdmin(admin.ModelAdmin):
 
 
 class AddressAdmin(admin.ModelAdmin):
+    list_editable=['status']
     list_display = ['user', 'address', 'status']
 
 

@@ -117,7 +117,6 @@ $(document).ready(function () {
   });
 
   // user dasboard section
-
   $(".nav-link").on("click", function () {
     $(".nav-link").removeClass("active");
     $(this).addClass("active");
@@ -134,7 +133,7 @@ $(document).ready(function () {
     $("#address-section").show();
   });
 
-  $("#make_default_address").on("click", function () {
+  $(".make_default_address").on("click", function () {
     console.log("make_default_address btn clicked");
 
     let index = $(this).attr("data-make_default");
@@ -148,7 +147,12 @@ $(document).ready(function () {
         console.log("trying to make-address-default-", index);
       },
 
-      success: function () {
+      success: function (response) {
+        $(".active_address").remove();
+        $(".make_default_address[data-make_default='" + index + "']")
+          .text("Default Address")
+          .removeClass("make_default_address");
+
         console.log("make-address-default success");
       },
     });

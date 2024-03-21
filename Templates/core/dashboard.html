@@ -149,11 +149,14 @@
                   <p class="lead">{{i.address}}</p>
                   <p class="lead">Phone {{i.phone}}</p>
                   {% if i.status %}
-                  <p class="lead text-success">
+                  <p class="lead text-success active_address">
                     Active&nbsp;<i class="bi bi-check-circle-fill"></i>
                   </p>
                   {%else%}
-                  <button data-make_default="{{i.id}}" id="make_default_address" class="btn btn-primary">
+                  <button
+                    data-make_default="{{i.id}}"
+                    class="btn btn-primary make_default_address"
+                  >
                     Make Default
                   </button>
                   {%endif%}
