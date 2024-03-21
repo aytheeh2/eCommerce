@@ -1,50 +1,117 @@
 {% extends 'core/base.html' %} {% load static %} {% block content %}
 <div class="container-fluid">
   <div class="row">
-    <nav
-      id="sidebar"
-      class="col-md-3 col-lg-2 d-flex flex-column sidebar-sticky"
-    >
-      <h6
-        class="sidebar-heading d-flex align-items-center px-3 mt-4 mb-1 text-muted"
-      >
-        <button class="btn btn-primary btn-block" id="profile">Profile</button>
-      </h6>
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item active">
-          <a href="#" class="nav-link active" aria-current="page">
-            <svg
-              class="bi bi-person"
-              width="16"
-              height="16"
-              fill="currentColor"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"
-              />
-            </svg>
-            <span class="ms-2">Overview</span>
+    <!-- Sidebar -->
+    <div class="col-xl-2 col-sm-12 col-md-3 col-lg-2 bg-body-tertiary">
+      <div class="p-3">
+        <a
+          href="/"
+          class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none"
+        >
+          <svg class="bi pe-none me-2" width="30" height="24">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+          <span class="fs-5">Profile</span>
+        </a>
+        <hr />
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a href="#" class="nav-link active" aria-current="page">
+              <svg class="bi pe-none me-2" width="14" height="14">
+                <use xlink:href="#home"></use>
+              </svg>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link link-body-emphasis">
+              <svg class="bi pe-none me-2" width="14" height="14">
+                <use xlink:href="#speedometer2"></use>
+              </svg>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a id="order" class="nav-link link-body-emphasis">
+              <svg class="bi pe-none me-2" width="14" height="14">
+                <use xlink:href="#speedometer2"></use>
+              </svg>
+              Orders
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link link-body-emphasis">
+              <svg class="bi pe-none me-2" width="14" height="14">
+                <use xlink:href="#grid"></use>
+              </svg>
+              Products
+            </a>
+          </li>
+        </ul>
+        <hr />
+        <div class="dropdown">
+          <a
+            href="#"
+            class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="https://github.com/aytheeh2.png"
+              alt=""
+              width="24"
+              height="24"
+              class="rounded-circle me-2"
+            />
+            <strong>{{request.user}}</strong>
           </a>
-        </li>
-      </ul>
-    </nav>
-
-    <main class="col ms-md-3 col-lg-9">
-      <div class="container mt-3">
-        <h1>Welcome, John Doe</h1>
-        <p>This is your profile dashboard.</p>
-
-        <div class="d-flex justify-content-between mt-5">
-          <button type="button" class="btn btn-primary">Edit Profile</button>
-          <button type="button" class="btn btn-secondary">
-            Change Password
-          </button>
+          <ul class="dropdown-menu text-small shadow">
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" href="{% url 'userauth:logout' %}"
+                >Sign out</a
+              >
+            </li>
+          </ul>
         </div>
       </div>
-    </main>
+    </div>
+    <!-- Main Content -->
+    <div class="col-xl-10 col-sm-12 col-md-9 col-lg-10 my-3 p-3">
+      <!-- <div class="container">
+        <div class="row bg-dark">
+          <div class="col bg-info">
+            <p class="display-6">Welcome {{request.user}}</p>
+          </div>
+          <div class="col bg-secondary">f</div>
+        </div>
+      </div> -->
+      <div class="container">
+        <p class="display-6">Welcome {{request.user}}.</p>
+      </div>
+      <div class="col" id="main-content">
+        <div id="orders-section" style="display: none">
+          <table class="table table-striped table-bordered" id="orders-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in orders %}
+              <tr>
+                <td></td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-
-{% endblock %}
+{%endblock%}

@@ -115,6 +115,12 @@ $(document).ready(function () {
       return false;
     }
   });
+
+  // user dasboard section 
+  $("#order").on("click", function () {
+    console.log("#order clicked");
+    $("#orders-section").show();
+  });
 });
 
 $("#review_Form").submit(function (e) {
