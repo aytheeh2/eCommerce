@@ -112,9 +112,9 @@
       </div>
       <hr class="bg-light mb-4" />
       {% if total_cart_items %}
-      <button type="button" class="btn btn-success btn-block">
+      <a href="{% url 'core:checkout' %}" class="btn btn-info btn-block">
         Proceed to Checkout
-      </button>
+      </a>
       {%else%}
       <a
         href="{% url 'core:products-list' %}"

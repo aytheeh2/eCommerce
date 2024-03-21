@@ -3,9 +3,10 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from .models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+
 # taggit
 from taggit.models import Tag
-
 
 # for product reviews
 from .forms import ReviewForm
@@ -13,6 +14,11 @@ from django.http import JsonResponse
 
 # for ajax product filtering
 from django.template.loader import render_to_string
+
+# paypal
+from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+from paypal.standard.forms import PayPalPaymentsForm
 
 
 def home_view(request):
@@ -325,3 +331,64 @@ def update_items_in_cart(request):
         "total_cart_items": len(request.session['cart_data_obj']),
 
     })
+
+
+@login_required
+def checkout(request):
+
+    total_amount = 0
+    if 'cart_data_obj' in request.session:
+        for p_id, item in request.session['cart_data_obj'].items():
+            total_amount += int(item['quantity']) * float(item['price'])
+
+        order = CartOrder.objects.create(
+            user=request.user,
+            price=total_amount,
+
+        )
+
+        cart_total = 0
+        for p_id, item in request.session['cart_data_obj'].items():
+            cart_total += int(item['quantity']) * float(item['price'])
+
+        cart_order_products = CartOrderItems.objects.create(
+            order=order,
+            invoice_no="INVOICE-NO-"+str(order.id),
+            item=item['title'],
+            qty=item['quantity'],
+            price=item['price'],
+            total=float(item['quantity']) * float(item['price']),
+            image=item['image'],
+            product_status="processing",
+        )
+
+    paypal_dict = {
+        "business": "bizaytheeh@gmail.com",
+        "amount": cart_total,
+        "item_name": "order_item_no-"+str(order.id),
+        "invoice": "INVOICE_NO-"+str(order.id),
+        "currency_code": "USD",
+        "notify_url": request.build_absolute_uri(reverse('core:paypal-ipn')),
+        "return": request.build_absolute_uri(reverse('core:payment_completed_view')),
+        "cancel_return": request.build_absolute_uri(reverse('core:payment_failed_view')),
+        # Custom command to correlate to some function later (optional)
+        # "custom": "premium_plan",
+    }
+
+    # Create the instance.
+    form = PayPalPaymentsForm(initial=paypal_dict)
+
+    return render(request, 'core/checkout.html', {
+        "cart_data": request.session['cart_data_obj'],
+        "total_cart_items": len(request.session['cart_data_obj']),
+        "cart_total": cart_total,
+        "form": form,  # paypal form
+    })
+
+
+def payment_completed_view(request):
+    return render(request, 'core/payment_completed.html')
+
+
+def payment_failed_view(request):
+    return render(request, 'core/payment_failed.html')

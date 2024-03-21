@@ -67,7 +67,7 @@ class Tags(models.Model):
 
 
 STATUS_CHOICES = (
-    ('process', "Processing"),
+    ('processing', "Processing"),
     ('shipped', "Shipped"),
     ('delivered', "Delivered"),
 )
@@ -178,6 +178,7 @@ class CartOrderItems(models.Model):
     product_status = models.CharField(max_length=200)
     item = models.CharField(max_length=200)
     qty = models.IntegerField(default=0)
+    image = models.CharField(max_length=200)
     price = models.DecimalField(
         max_digits=9999999, decimal_places=2, default="1.99")
     total = models.DecimalField(
