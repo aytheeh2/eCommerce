@@ -5,6 +5,10 @@ setTimeout(function () {
   $(".alert").alert("close");
 }, 5000);
 
+$("#profile").on("click", function () {
+  console.log("#profile clicked");
+});
+
 $(document).ready(function () {
   $(".owl-carousel").owlCarousel({
     loop: false,
@@ -72,6 +76,11 @@ $(document).ready(function () {
         $("#filtered-product").html(response.data);
       },
     });
+  });
+
+  //  jQuery code forprofile
+  $("#profile").on("click", function () {
+    console.log("#profile clicked");
   });
 
   //checking for input range slider exceeds value

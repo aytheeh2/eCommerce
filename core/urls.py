@@ -58,4 +58,8 @@ urlpatterns = [
     path('payment-failed/', views.payment_failed_view,
          name='payment_failed_view'),
 
+    # dashboard
+    path('dashboard/', views.customer_dashboard,
+         name='dashboard'),
+
 ]

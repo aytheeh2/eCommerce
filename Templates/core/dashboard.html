@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %} {% load static %} {% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <nav
+      id="sidebar"
+      class="col-md-3 col-lg-2 d-flex flex-column sidebar-sticky"
+    >
+      <h6
+        class="sidebar-heading d-flex align-items-center px-3 mt-4 mb-1 text-muted"
+      >
+        <button class="btn btn-primary btn-block" id="profile">Profile</button>
+      </h6>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item active">
+          <a href="#" class="nav-link active" aria-current="page">
+            <svg
+              class="bi bi-person"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"
+              />
+            </svg>
+            <span class="ms-2">Overview</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <main class="col ms-md-3 col-lg-9">
+      <div class="container mt-3">
+        <h1>Welcome, John Doe</h1>
+        <p>This is your profile dashboard.</p>
+
+        <div class="d-flex justify-content-between mt-5">
+          <button type="button" class="btn btn-primary">Edit Profile</button>
+          <button type="button" class="btn btn-secondary">
+            Change Password
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+
+{% endblock %}

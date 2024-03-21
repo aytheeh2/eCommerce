@@ -392,3 +392,8 @@ def payment_completed_view(request):
 
 def payment_failed_view(request):
     return render(request, 'core/payment_failed.html')
+
+
+@login_required
+def customer_dashboard(request):
+    return render(request, 'core/dashboard.html')
