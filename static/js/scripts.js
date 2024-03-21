@@ -133,6 +133,26 @@ $(document).ready(function () {
     $("#orders-section").hide();
     $("#address-section").show();
   });
+
+  $("#make_default_address").on("click", function () {
+    console.log("make_default_address btn clicked");
+
+    let index = $(this).attr("data-make_default");
+    $.ajax({
+      url: "/make-address-default",
+      data: {
+        index: index,
+      },
+      dataType: "json",
+      beforeSend: function () {
+        console.log("trying to make-address-default-", index);
+      },
+
+      success: function () {
+        console.log("make-address-default success");
+      },
+    });
+  });
 });
 
 $("#review_Form").submit(function (e) {

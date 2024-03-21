@@ -429,3 +429,18 @@ def order_details(request, id):
         'order_items': order_items,
     }
     return render(request, 'core/order_details.html', context)
+
+
+@login_required
+def make_address_default(request):
+    id = int(request.GET['index'])
+    addresses = Address.objects.filter(user=request.user)
+    for i in addresses:
+        addresses.status = False
+    addresses.save(commit=False)
+    address = Address.objects.get(pk=id)
+    address.status = True
+    address.save()
+    return JsonResponse({
+        'inded': id
+    })

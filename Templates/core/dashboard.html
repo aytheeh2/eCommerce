@@ -113,21 +113,21 @@
           >
             <div class="border border-2 p-3 text-center">
               <p class="lead fw-bold">Billing Address</p>
-              <form action="" method="post" class="d-inline-block">
-                {%csrf_token%}
-                <div class="d-inline-block align-middle text-left">
+              <div class="align-middle text-left">
+                <form action="" method="post" class="w-75">
+                  {%csrf_token%}
                   <input
                     name="address"
                     type="text"
                     placeholder="Address"
-                    class="form-control w-100 my-2 p-3 d-inline-block"
+                    class="form-control w-100"
                     required
                   /><br />
                   <input
                     type="text"
                     name="phone"
                     placeholder="Phone"
-                    class="form-control w-100 my-2 d-inline-block"
+                    class="form-control w-100"
                     required
                   /><br />
                   <input
@@ -137,8 +137,8 @@
                     name=""
                     id=""
                   />
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
 
             <div class="row">
@@ -148,8 +148,15 @@
                   <h4>Address {{forloop.counter}}</h4>
                   <p class="lead">{{i.address}}</p>
                   <p class="lead">Phone {{i.phone}}</p>
-                  <p class="lead">Active:{{i.status}}</p>
-                  <button class="btn btn-primary">Make Default</button>
+                  {% if i.status %}
+                  <p class="lead text-success">
+                    Active&nbsp;<i class="bi bi-check-circle-fill"></i>
+                  </p>
+                  {%else%}
+                  <button data-make_default="{{i.id}}" id="make_default_address" class="btn btn-primary">
+                    Make Default
+                  </button>
+                  {%endif%}
                 </div>
               </div>
               {%endfor%}

@@ -66,4 +66,6 @@ urlpatterns = [
     path('order/<int:id>/', views.order_details,
          name='order-details'),
 
+    path('make-address-default/', views.make_address_default,
+         name="make_address_default"),
 ]
