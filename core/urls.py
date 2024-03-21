@@ -62,4 +62,8 @@ urlpatterns = [
     path('dashboard/', views.customer_dashboard,
          name='dashboard'),
 
+    # order details by id
+    path('order/<int:id>/', views.order_details,
+         name='order-details'),
+
 ]

@@ -14,46 +14,14 @@
         <hr />
         <ul class="nav nav-pills flex-column mb-auto">
           <li>
-            <a href="#" class="nav-link active link-body-emphasis">
+            <a
+              href="{% url 'core:dashboard' %}"
+              class="nav-link link-body-emphasis"
+            >
               <svg class="bi pe-none me-2" width="14" height="14">
                 <use xlink:href="#speedometer2"></use>
               </svg>
               Dashboard
-            </a>
-          </li>
-          <li>
-            <a id="order" class="nav-link link-body-emphasis">
-              <svg class="bi pe-none me-2" width="14" height="14">
-                <use xlink:href="#speedometer2"></use>
-              </svg>
-              Orders
-            </a>
-          </li>
-          <li>
-            <a id="address" class="nav-link link-body-emphasis">
-              <svg class="bi pe-none me-2" width="14" height="14">
-                <use xlink:href="#grid"></use>
-              </svg>
-              Address
-            </a>
-          </li>
-          <li>
-            <a href="#" class="nav-link link-body-emphasis">
-              <svg class="bi pe-none me-2" width="14" height="14">
-                <use xlink:href="#grid"></use>
-              </svg>
-              Settings
-            </a>
-          </li>
-          <li>
-            <a
-              href="{% url 'userauth:logout' %}"
-              class="nav-link link-body-emphasis"
-            >
-              <svg class="bi pe-none me-2" width="14" height="14">
-                <use xlink:href="#grid"></use>
-              </svg>
-              Logout
             </a>
           </li>
         </ul>
@@ -74,37 +42,39 @@
         <p class="display-6">Welcome {{request.user}}.</p>
       </div>
       <div class="col">
-        <div id="orders-section" style="display: none">
+        <div id="orders-section">
           <table class="table table-bordered table-hover">
             <thead class="table-secondary">
               <tr>
                 <th scope="col">INVOICE NO</th>
                 <th scope="col">Date</th>
+                <th scope="col">Product</th>
                 <th scope="col">Status</th>
-                <th scope="col">Price</th>
                 <th scope="col">Paid Status</th>
-                <th scope="col">View</th>
+                <th scope="col" class="text-center">Quantity</th>
+                <th scope="col">Subtotal</th>
               </tr>
             </thead>
             <tbody>
-              {% for i in orders %}
+              {% for i in order_items %}
               <tr>
                 <td>{{ i.id }}</td>
-                <td>{{ i.order_date }}</td>
+                <td>{{ order_details.order_date }}</td>
+                <td>{{ i.item }}</td>
+                <!-- <td><span>{% for k in i.item %}{{k}}{%endfor%}</span></td> -->
                 <td>{{ i.product_status|title }}</td>
-                <td>${{ i.price }}</td>
                 {% if i.paid_status %}
                 <td class="text-success fw-bold">Paid</td>
                 {%else%}
                 <td class="text-danger fw-bold">Unpaid</td>
                 {%endif%}
-                <td><a href="{% url 'core:order-details' i.id %}">View</a></td>
+                <td class="text-center">{{i.qty}}</td>
+                <td>${{i.total}}</td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
-        <div id="address-section" style="display: none">addresss</div>
       </div>
     </div>
   </div>

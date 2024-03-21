@@ -116,10 +116,22 @@ $(document).ready(function () {
     }
   });
 
-  // user dasboard section 
+  // user dasboard section
+
+  $(".nav-link").on("click", function () {
+    $(".nav-link").removeClass("active");
+    $(this).addClass("active");
+  });
+
   $("#order").on("click", function () {
     console.log("#order clicked");
     $("#orders-section").show();
+  });
+
+  $("#address").on("click", function () {
+    console.log("#address clicked");
+    $("#orders-section").hide();
+    $("#address-section").show();
   });
 });
 
