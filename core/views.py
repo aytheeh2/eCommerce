@@ -1,7 +1,7 @@
 from django.utils import timezone
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
-from .models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address
+from .models import Contact, Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
@@ -482,3 +482,16 @@ def make_address_default(request):
     return JsonResponse({
         "index": id
     })
+
+
+@login_required
+def contact(request):
+    if request.method == "POST":
+        Contact.objects.create(
+            name=request.POST['name'],
+            message=request.POST['message'],
+            email=request.POST['email'],
+        )
+        messages.success(request, 'Message Sent!')
+        return redirect('core:home')
+    return render(request, 'core/contact.html')

@@ -231,6 +231,7 @@ Contact_Status = (
 
 class Contact(models.Model):
     name = models.CharField(max_length=200)
+    email=models.EmailField()
     message = models.CharField(max_length=200)
     status = models.CharField(choices=Contact_Status,
                               max_length=10, default='pending')

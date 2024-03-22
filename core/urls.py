@@ -68,4 +68,7 @@ urlpatterns = [
 
     path('make-address-default/', views.make_address_default,
          name="make_address_default"),
+
+    # contact
+    path('contact/', views.contact, name="contact"),
 ]

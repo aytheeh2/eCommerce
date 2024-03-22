@@ -48,7 +48,7 @@ class AddressAdmin(admin.ModelAdmin):
 
 
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ['name', 'message', 'status']
+    list_display = ['name', 'email', 'message', 'status']
     list_editable = ['status']
 
 
