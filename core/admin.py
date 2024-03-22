@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 
 # begin imports
-from .models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address
+from .models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address, Contact
 
 
 class ProductImagesAdmin(admin.TabularInline):
@@ -43,8 +43,13 @@ class WishlistAdmin(admin.ModelAdmin):
 
 
 class AddressAdmin(admin.ModelAdmin):
-    list_editable=['status']
+    list_editable = ['status']
     list_display = ['user', 'address', 'status']
+
+
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ['name', 'message', 'status']
+    list_editable = ['status']
 
 
 # beging reg
@@ -56,3 +61,4 @@ admin.site.register(CartOrderItems, CartOrderItemsAdmin)
 admin.site.register(ProductReview, ProductReviewAdmin)
 admin.site.register(WishList, WishlistAdmin)
 admin.site.register(Address, AddressAdmin)
+admin.site.register(Contact, ContactAdmin)

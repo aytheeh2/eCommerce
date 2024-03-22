@@ -220,3 +220,23 @@ class Address(models.Model):
 
     class Meta:
         verbose_name_plural = "Address"
+
+
+Contact_Status = (
+    ('pending', "PENDING"),
+    ('processing', "PROCESSING"),
+    ('solved', "SOLVED"),
+)
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=200)
+    message = models.CharField(max_length=200)
+    status = models.CharField(choices=Contact_Status,
+                              max_length=10, default='pending')
+
+    class Meta:
+        verbose_name_plural = 'Contact'
+
+    def __str__(self):
+        return f'{self.name} : {self.status}'
