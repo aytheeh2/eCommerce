@@ -25,9 +25,11 @@ def home_view(request):
     Products = Product.objects.filter(
         featured=True, product_status='published')
     Categories = Category.objects.all()
+    latest_products = Product.objects.order_by('-date')[:4]
     context = {
         'Products': Products,
         'Categories': Categories,
+        'latest_products': latest_products,
     }
     return render(request, 'core/index.html', context=context)
 
@@ -393,8 +395,7 @@ def checkout(request):
         default_address = Address.objects.get(user=request.user, status=True)
     except:
         default_address = None
-    
-    
+
     # Create the instance.
     form = PayPalPaymentsForm(initial=paypal_dict)
 

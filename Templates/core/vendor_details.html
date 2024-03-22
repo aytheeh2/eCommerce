@@ -50,40 +50,59 @@
 <h2 class="p-3 my-4 border-bottom display-5 text-center">{{vendor.title}}'s Products</h2>
 <div class="album py-5 bg-body-secondary">
     <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for p in products_of_vendor %}
-            <div class="col">
-                <div class="card shadow-sm border-1 rounded-3" style="max-width: 250px; position: relative;">
-                    <div class="position-absolute top-0 start-0 translate-middle badge bg-danger"
-                        style="z-index: 1; margin-left: 20px;">
-                        -{{p.get_percentage|floatformat:0}}% Off
-                    </div>
-                    <a href="{% url 'core:product-details' p.pid %}" class="text-decoration-none text-dark">
-                        <div class="ratio ratio-4x3">
-                            <img src="{{ p.image.url }}"
-                                class="bd-placeholder-img card-img-top img-responsive border-1 border-bottom  rounded-top"
-                                width="100%" height="100%" role="img" preserveAspectRatio="xMidYMid slice"
-                                focusable="false">
+        <div class="row bg-body-tertiary">
+            <div class="owl-carousel owl-theme p-2 m-2 mx-auto">
+                {% for i in products_of_vendor %}
+                <div class="item bg-secondary align-items-center">
+                    <div class="card shadow-sm border-1 rounded-3" style="max-width: 250px; position: relative">
+                        <div class="position-absolute top-0 start-0 translate-middle badge bg-danger"
+                            style="z-index: 1; margin-top: 25px; margin-left: 40px">
+                            -{{i.get_percentage|floatformat:0}}% Off
                         </div>
+                        <a href="{% url 'core:product-details' i.pid %}" class="text-decoration-none text-dark">
+                            <div class="ratio ratio-4x3">
+                                <img src="{{ i.image.url }}" class="card-img-top img-fluid" width="100%" height="100%"
+                                    role="img" preserveAspectRatio="xMidYMid slice" focusable="false" />
+                            </div>
+                        </a>
                         <div class="card-body bg-body-secondary">
-                            <p class="card-title text-center fs-5">{{p.title}}</p>
-                    </a>
-                    <p class="card-title text-center fs-6">${{p.price}}</p>
-                    <p class="card-text text-center"><small class="text-body-secondary fs-6">Sold by
-                            {{p.vendor}}</small></p>
-                    <p class="card-text">{{p.description}}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group bg-body-tertiary">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Buy</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Add To Cart</button>
+                            <a href="{% url 'core:product-details' i.pid %}" class="text-decoration-none text-dark">
+                                <p class="card-title text-center fs-5">{{i.title}}</p>
+                            </a>
+                            <p class="card-title text-center fs-6">
+                                $<span
+                                    class="card-title text-center fs-6 current-product-price-{{i.id}}">{{i.price}}</span>
+                            </p>
+                            <p class="card-text text-center">
+                                <small class="text-body-secondary fs-6">Sold by {{i.vendor}}</small>
+                            </p>
+                            <p class="card-text">{{i.description|truncatechars:30}}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group bg-body-tertiary mt-auto">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                                        Buy
+                                    </button>
+
+                                    <input type="hidden" value="1" id="product-quantity"
+                                        class="product-quantity-{{ i.id }}" />
+                                    <input type="hidden" class="product-pid-{{ i.id }}" value="{{ i.pid }}" />
+                                    <input type="hidden" class="product-image-{{ i.id }}" value="{{ i.image.url }}"
+                                        name="" />
+                                    <input type="hidden" class="product-title-{{ i.id }}" value="{{ i.title }}" />
+                                    <input type="hidden" class="product-id-{{i.id}}" value="{{i.id}}" />
+                                    <button type="button" class="btn btn-sm btn-outline-secondary add-to-cart-btn"
+                                        data-index="{{i.id}}" id="add-to-cart-btn">
+                                        Add ToCart
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                {%endfor%}
             </div>
-            {%endfor%}
         </div>
     </div>
-</div>
 </div>
 <!-- end album -->
 {%endblock%}

@@ -1,12 +1,16 @@
 {% extends 'core/base.html' %} {%load static %} {% block content %}
 <div class="container-fluid">
-  <!--  -->
-  <div class="scrollable-div border-top border-bottom bg-body-tertiary my-1">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
-    <a href="#">Link 4</a>
-    <a href="#">Link 5</a>
+  <!--  scrollspy -->
+  <div
+    id="scrollable-div"
+    class="scrollable-div border-top border-bottom bg-body-tertiary my-1"
+    data-bs-spy="scroll"
+    data-bs-target="#scrollable-div"
+    data-bs-offset="0"
+  >
+    <a href="#scroll-1">Featured</a>
+    <a href="#scroll-2">Exotic</a>
+    <a href="#scroll-3">Latest</a>
     <a href="#">Link 6</a>
     <a href="#">Link 7</a>
     <a href="#">Link 8</a>
@@ -15,6 +19,7 @@
     <!-- Add more links as needed -->
   </div>
   <!--  -->
+
   <!-- start banner -->
   <div
     class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-body-tertiary"
@@ -85,23 +90,6 @@
     {%endfor%}
   </div>
   <!--  -->
-
-  <!-- start category ribbon -->
-  <!-- <div class="container">
-        <div class="row bg-body-tertiary p-3 border rounded mx-auto">
-            <div class="col-12">
-                <ul class="nav justify-content-center">
-                    <li class="nav-item mx-1"><a href="{% url 'core:products-list' %}"
-                            class="btn btn-outline-dark btn-light">All Categories</a>
-                    </li>
-                    <li class="nav-item mx-1"><a href="" class="btn btn-outline-dark btn-light">Deals</a></li>
-                    <li class="nav-item mx-1"><a href="" class="btn btn-outline-dark btn-light">Vegetables</a></li>
-                    <li class="nav-item mx-1"><a href="" class="btn btn-outline-dark btn-light">Fruits</a></li>
-                </ul>
-            </div>
-        </div>
-    </div> -->
-  <!-- end category ribbon -->
 
   <!-- start cards -->
   <div class="container px-4 py-5" id="custom-cards">
@@ -261,7 +249,7 @@
     </button>
   </div>
 
-  <h2 class="display-4 text-center my-5">Featured Products</h2>
+  <h2 id="scroll-1" class="display-4 text-center my-5">Featured Products</h2>
   <div class="container bg-body-secondary align-items-center shadow my-4">
     <div class="row bg-body-tertiary">
       <div class="col-12">
@@ -370,10 +358,23 @@
   <!--  -->
 
   <!-- category banner 2 -->
-  <div class="container-fluid banner bg-secondary my-5">
+  <div id="scroll-2" class="container-fluid banner bg-secondary my-5">
     <div class="container py-5">
       <div class="row g-4 align-items-center">
         <div class="col-lg-6">
+          <!-- <div class="py-4">
+            <h1 class="display-3 text-white">Fresh Exotic Fruits</h1>
+            <p class="fw-normal display-3 text-dark mb-4">in Our Store</p>
+            <p class="mb-4 text-dark">
+              The generated Lorem Ipsum is therefore always free from repetition
+              injected humour, or non-characteristic words etc.
+            </p>
+            <a
+              href="{% url 'core:category-details' cid='catgf1e54ecae' %}"
+              class="banner-btn btn border-2 border-white rounded-pill text-dark py-3 px-5"
+              >BUY</a
+            >
+          </div> -->
           <div class="py-4">
             <h1 class="display-3 text-white">Fresh Exotic Fruits</h1>
             <p class="fw-normal display-3 text-dark mb-4">in Our Store</p>
@@ -408,88 +409,48 @@
   </div>
   <!-- end category banner 2 -->
 
-  <!-- featured posts -->
-  <div class="row mb-2">
-    <div class="col-md-6">
-      <div
-        class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
-      >
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary-emphasis"
-            >World</strong
-          >
-          <h3 class="mb-0">Featured post</h3>
-          <div class="mb-1 text-body-secondary">Nov 12</div>
-          <p class="card-text mb-auto">
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content.
-          </p>
-          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-            Continue reading
-            <svg class="bi">
-              <use xlink:href="#chevron-right"></use>
-            </svg>
-          </a>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-          <svg
-            class="bd-placeholder-img"
-            width="200"
-            height="250"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Placeholder: Thumbnail"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#55595c"></rect>
-            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-          </svg>
-        </div>
+  <!-- popular products -->
+  <div id="scroll-3" class="container p-5 my-4">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="text-center mb-4 display-6">Latest Products</h2>
       </div>
     </div>
-    <div class="col-md-6">
-      <div
-        class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
-      >
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-success-emphasis"
-            >Design</strong
-          >
-          <h3 class="mb-0">Post title</h3>
-          <div class="mb-1 text-body-secondary">Nov 11</div>
-          <p class="mb-auto">
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content.
-          </p>
-          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-            Continue reading
-            <svg class="bi">
-              <use xlink:href="#chevron-right"></use>
-            </svg>
-          </a>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-          <svg
-            class="bd-placeholder-img"
-            width="200"
-            height="250"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Placeholder: Thumbnail"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#55595c"></rect>
-            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-          </svg>
+
+    <div class="row row-cols-2 row-cols-md-4 row-cols-sm-1 g-4">
+      {% for product in latest_products %}
+      <div class="col">
+        <div class="card mb-3 position-relative">
+          <img
+            src="{{ product.image.url }}"
+            class="card-img-top"
+            alt="Product Image"
+            style="max-height: 200px"
+          />
+          <div class="card-body">
+            <div
+              class="position-absolute top-0 start-0 translate-middle badge bg-danger"
+              style="z-index: 1; margin-top: 25px; margin-left: 40px"
+            >
+              -{{product.get_percentage|floatformat}}% Off
+            </div>
+            <h5 class="card-title lead">{{ product.title }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Added: {{ product.date|date }}</small>
+            <a
+              href="{% url 'core:product-details' product.pid %}"
+              class="btn btn-primary stretched-link"
+              >View</a
+            >
+          </div>
         </div>
       </div>
+      {% endfor %}
     </div>
   </div>
-  <!-- end feature -->
+  <!-- end popular -->
 
   <!-- start 2 box Section -->
   <div class="container">
