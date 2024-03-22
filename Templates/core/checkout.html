@@ -11,7 +11,44 @@
         >
       </p>
       <div class="container">
-        <p class="lead m-2">Address</p>
+        {% if default_address %}
+        <p class="lead text-success m-2">Default Address</p>
+        <div class="border rounded rounded-3 p-4 m-1">
+          <p class="lead">{{default_address.address}}</p>
+          <p class="lead">{{default_address.phone}}</p>
+        </div>
+        {%else%}
+        <p class="lead p-3">No Default Address Added</p>
+        {%endif%}
+        <div class="border rounded rounded-3 p-3">
+          <p class="lead">Add New Address</p>
+          <form method="post">
+            {%csrf_token%}
+            <p>
+              <input
+                type="text"
+                class="form-control w-75"
+                placeholder="Address"
+                name="address"
+                id=""
+                required
+              />
+            </p>
+            <p>
+              <input
+                type="text"
+                class="form-control w-75"
+                placeholder="phone"
+                name="phone"
+                id=""
+                required
+              />
+            </p>
+            <p>
+              <input type="submit" class="btn btn-success" name="" id="" />
+            </p>
+          </form>
+        </div>
       </div>
     </div>
 
@@ -85,15 +122,15 @@
         >
       </div>
 
-      {% if total_cart_items %}
+      {% if total_cart_items and default_address %}
       <!-- <a href="" class="btn btn-primary btn-block">Pay</a> -->
       <!-- writes out the form tag automatically -->
       {{ form.render }} {% else %}
       <a href="{% url 'core:products-list' %}" class="btn btn-success btn-block"
         >Continue Shopping</a
       >
-      <button type="button" class="btn btn-success btn-block">
-        Update Carts
+      <button type="button" class="btn btn-danger btn-block update_address_refresh">
+        Update Addess
       </button>
       {% endif %}
     </div>

@@ -58,21 +58,31 @@
             <tbody>
               {% for i in order_items %}
               <tr>
-                <td>{{ i.id }}</td>
-                <td>{{ order_details.order_date }}</td>
+                <td>{{ i.invoice_no }}</td>
+                <td>{{ i.order.order_date|date:"d M,Y" }}</td>
                 <td>{{ i.item }}</td>
-                <!-- <td><span>{% for k in i.item %}{{k}}{%endfor%}</span></td> -->
                 <td>{{ i.product_status|title }}</td>
-                {% if i.paid_status %}
+                {% if i.order.paid_status %}
                 <td class="text-success fw-bold">Paid</td>
-                {%else%}
+                {% else %}
                 <td class="text-danger fw-bold">Unpaid</td>
-                {%endif%}
-                <td class="text-center">{{i.qty}}</td>
-                <td>${{i.total}}</td>
+                {% endif %}
+                <td class="text-center">{{ i.qty }}</td>
+                <td>${{ i.total }}</td>
               </tr>
               {% endfor %}
             </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="6" class="text-end">Subtotal</td>
+                <td>${{ order_details.price }}</td>
+              </tr>
+              <!-- You can calculate and display tax here -->
+              <tr>
+                <td colspan="6" class="text-end">Total</td>
+                <td>${{ order_details.price }}</td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>

@@ -76,12 +76,12 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              Dropdown
+              Explore
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><a class="dropdown-item" href="#">All Products</a></li>
+              <li><a class="dropdown-item" href="#">Categories</a></li>
+              <li><a class="dropdown-item" href="{% url 'core:all-vendors' %}">Vendors</a></li>
             </ul>
           </li>
           <li class="nav-item">
@@ -101,7 +101,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="{% url 'core:dashboard' %}"
-              >Orders</a
+              >Profile</a
             >
           </li>
           <li class="nav-item">

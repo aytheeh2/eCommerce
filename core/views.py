@@ -225,12 +225,8 @@ def filter_product(request):
 # @login_required
 
 
+# @login_required
 def add_to_cart(request):
-    if request.user:
-        print('sssss')
-    else:
-        print('nooooooooooooo')
-
     cart_product = {}
 
     cart_product[str(request.GET['id'])] = {
@@ -262,6 +258,7 @@ def add_to_cart(request):
     })
 
 
+@login_required
 def cart_view(request):
     cart_total = 0
     if 'cart_data_obj' in request.session:
@@ -351,16 +348,16 @@ def checkout(request):
         for p_id, item in request.session['cart_data_obj'].items():
             cart_total += int(item['quantity']) * float(item['price'])
 
-        cart_order_products = CartOrderItems.objects.create(
-            order=order,
-            invoice_no="INVOICE-NO-"+str(order.id),
-            item=item['title'],
-            qty=item['quantity'],
-            price=item['price'],
-            total=float(item['quantity']) * float(item['price']),
-            image=item['image'],
-            product_status="processing",
-        )
+            cart_order_products = CartOrderItems.objects.create(
+                order=order,
+                invoice_no="INVOICE-NO-"+str(order.id),
+                item=item['title'],
+                qty=item['quantity'],
+                price=item['price'],
+                total=float(item['quantity']) * float(item['price']),
+                image=item['image'],
+                product_status="processing",
+            )
 
     paypal_dict = {
         "business": "bizaytheeh@gmail.com",
@@ -375,6 +372,29 @@ def checkout(request):
         # "custom": "premium_plan",
     }
 
+    if request.method == "POST":
+        address = request.POST['address']
+        phone = request.POST['phone']
+
+        addresses = Address.objects.filter(user=request.user)
+        addresses.update(status=False)
+
+        new_address = Address.objects.create(
+            user=request.user,
+            status=True,
+            address=address,
+            phone=phone
+        )
+        new_address.save()
+
+        return redirect('core:checkout')
+
+    try:
+        default_address = Address.objects.get(user=request.user, status=True)
+    except:
+        default_address = None
+    
+    
     # Create the instance.
     form = PayPalPaymentsForm(initial=paypal_dict)
 
@@ -383,11 +403,28 @@ def checkout(request):
         "total_cart_items": len(request.session['cart_data_obj']),
         "cart_total": cart_total,
         "form": form,  # paypal form
+        "default_address": default_address
     })
 
 
 def payment_completed_view(request):
-    return render(request, 'core/payment_completed.html')
+    if 'cart_data_obj' in request.session:
+        print('yes', request.session['cart_data_obj'])
+        del request.session['cart_data_obj']
+    latest_order = CartOrder.objects.filter(
+        user=request.user).order_by('-id').first()
+    latest_order.paid_status = True
+    latest_order.save()
+    order_items = CartOrderItems.objects.filter(
+        order=latest_order)
+
+    print(*order_items)
+
+    context = {
+        'latest_order': latest_order,
+        'order_items': order_items
+    }
+    return render(request, 'core/payment_completed.html', context)
 
 
 def payment_failed_view(request):
@@ -396,7 +433,8 @@ def payment_failed_view(request):
 
 @login_required
 def customer_dashboard(request):
-    orders = CartOrder.objects.filter(user=request.user).order_by('-id')
+    orders = CartOrder.objects.filter(
+        user=request.user).order_by('-id').distinct()
     # order_items = CartOrderItems.objects.filter(order=orders)
 
     addresses = Address.objects.filter(user=request.user).order_by('-status')

@@ -259,8 +259,6 @@ $(".add-to-cart-btn").on("click", function () {
     },
 
     success: function (response) {
-      // $(this).html("Added To Cart");
-      // this_val.html("Added To Cart");
       $(this_val).html("Added To Cart ✓");
       $(".cart-items-count").text(response.totalcartitems);
       console.log("add to cart success");
@@ -324,35 +322,7 @@ $(".update-product").on("click", function () {
   });
 });
 
-// // add to cart
-// $(".add-to-cart-btn").on("click", function () {
-//     console.log("add to cart clicked");
-//     let quantity = $("#product-quantity").val();
-//     let product_title = $(".product-title").val();
-//     let product_id = $(".product-id").val();
-//     let product_price = $(".product-price").text();
-
-//     console.log(quantity, product_title, product_id, product_price);
-
-//     $.ajax({
-//         url: "/add-to-cart",
-//         data: {
-//             id: product_id,
-//             title: product_title,
-//             price: product_price,
-//             quantity: quantity,
-//         },
-//         dataType: "json",
-
-//         beforeSend: function () {
-//             console.log("trying to add to cart");
-//         },
-
-//         success: function (response) {
-//             // $(this).html("Added To Cart");
-//             // this_val.html("Added To Cart");
-//             $("#add-to-cart-btn").html("Added To Cart");
-//             console.log("add to cart success");
-//         },
-//     });
-// });
+$(".update_address_refresh").on("click", function () {
+  console.log("update_address_refresh clicked");
+  alert("You have not set a default address! Please add one")
+});
