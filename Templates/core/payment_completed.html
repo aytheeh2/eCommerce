@@ -21,7 +21,7 @@
                 </tr>
               </thead>
               <tbody>
-                  {% for i in order_items %}
+                {% for i in order_items %}
                 <tr>
                   <td>{{latest_order.id}}</td>
                   <td>{{i.item}}</td>
@@ -61,5 +61,4 @@
     </div>
   </div>
 </div>
-
 {%endblock%}
